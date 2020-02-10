@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581004748028.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2806372115",
+    "id" : "E1B8866A",
+    "lastKnownWriteTime" : 1580835193,
+    "last_content_update" : 1580835193,
+    "path" : "~/Documents/MemoriaTFE/tfe_principal.Rmd",
+    "project_path" : "tfe_principal.Rmd",
+    "properties" : {
+        "cursorPosition" : "61,0",
+        "scrollLine" : "54"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

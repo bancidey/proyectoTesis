@@ -1,0 +1,255 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\graphicspath{ {imagenes/} }
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{booktabs}
+\title{Primer documento}
+\author{Bernardo Ancidey \thanks{apoyado por Synergy Vision}}
+\date{Octubre 2019}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introducción}
+Añadimos un título, autor y fecha a nuestro primer docuemnto en \LaTeX{}!
+Haciéndole las primeras modificaciones
+a este documento de prueba. 
+Veamos que pasa con la Ñ, ñ, á, é, í, ó, ú, ü, Ú.
+sobredispersión.
+
+\addcontentsline{toc}{section}{Negritas e itálicas}
+\section*{Negritas e itálicas}
+Algunos de los mayores \emph{descubrimientos} 
+en la ciencia 
+fueron hechos por accidente.
+ 
+\textit{Algunos de los mayores \emph{descubrimientos} 
+en la ciencia 
+fueron hechos por accidente.}
+ 
+\textbf{Algunos de los mayores \emph{descubrimientos} 
+en la ciencia 
+fueron hechos por accidente.}
+
+\section{Imágenes}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.25\textwidth]{Carabobo}
+  \caption{Estado Carabobo}
+  \label{fig:mesh1}
+\end{figure}
+
+
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[width=0.25\textwidth]{Bolivar}
+   \caption{Estado Bolivar}
+   \label{fig:mesh2}
+\end{figure}
+
+Como se puede ver en la imagen \ref{fig:mesh1}, la función crece 
+cerca de 0. También, en la página \pageref{fig:mesh1} 
+es el mismo ejemplo.
+
+\section{Listas}
+
+\begin{itemize}
+  \item Las entradas individuales se indican con un punto negro, la llamada viñeta
+  \item El texto de las entradas puede ser de cualquier longitud.
+\end{itemize}
+
+
+\section{Ecuaciones}
+
+\begin{equation} \label{eq1}
+\begin{split}
+A & = \frac{\pi r^2}{2} \\
+ & = \frac{1}{2} \pi r^2
+\end{split}
+\end{equation}
+
+\begin{equation} \label{eu_eqn}
+e^{\pi i} + 1 = 0
+\end{equation}
+ 
+La bella ecuación \ref{eu_eqn} es conocida como la ecuación de Euler 
+
+\begin{multline}
+p(x) = 3x^6 + 14x^5y + 590x^4y^2 + 19x^3y^3\\ 
+- 12x^2y^4 - 12xy^5 + 2y^6 - a^3b^3
+\end{multline}
+
+\begin{align*} 
+2x - 5y &=  8 \\ 
+3x + 9y &=  -12
+\end{align*}
+
+\begin{align*}
+x&=y           &  w &=z              &  a&=b+c\\
+2x&=-y         &  3w&=\frac{1}{2}z   &  a&=b\\
+-4 + 5x&=2+y   &  w+2&=-1+w          &  ab&=cb
+\end{align*}
+
+
+\section{Resumen}
+\begin{abstract}
+Este es un párrafo simple al principio de la sección 
+documento. Una breve introducción sobre el tema principal.
+\end{abstract}
+
+Ahora que hemos escrito nuestro resumen, podemos empezar a escribir nuestro primer párrafo.
+ 
+\section{Párrafos y líneas}
+Esta línea iniciará un segundo párrafo.
+
+Este es el texto del primer párrafo. Este es el texto en primer lugar 
+párrafo. Este es el texto del primer párrafo. \par
+Este es el texto del segundo párrafo. Este es el texto en segundo lugar 
+párrafo. Este es el texto del segundo párrafo.
+
+\vspace{2em} % adds some space
+
+%-------------------------------------------------------------------------------
+%Example of a left justified alignement
+
+\begin{flushleft}
+``LaTeX is a document preparation system and document markup language. LaTeX uses the TeX typesetting program for formatting its output, and is itself written in the TeX macro language. LaTeX is not the name of a particular editing program, but refers to the encoding or tagging conventions that are used in LaTeX documents".
+\end{flushleft}
+
+%-------------------------------------------------------------------------------
+%Example of a right-justified text
+\begin{flushright}
+``LaTeX is a document preparation system and document markup language. LaTeX uses the TeX typesetting program for formatting its output, and is itself written in the TeX macro language. LaTeX is not the name of a particular editing program, but refers to the encoding or tagging conventions that are used in LaTeX documents".
+\end{flushright}
+%-------------------------------------------------------------------------------
+
+\vspace{2em} % adds some space
+
+%Using \raggedright to left-justify the text and then \justifying to "fix it"
+\raggedright
+Example 4: Following is an example of switching back to justified text after ragged text has been switched on.
+
+\vspace{1em} % adds some space
+
+
+%-------------------------------------------------------------------------------
+%Line breaks and blank spaces
+\newpage
+LaTeX is a document preparation system and document markup language. \\  LaTeX uses the TeX typesetting \hspace{2cm} program for formatting its output, and is itself written in the TeX macro language. LaTeX \vspace{1cm} is not the name of a particular editing program, but refers to the encoding or tagging conventions that are used in LaTeX documents
+%-------------------------------------------------------------------------------
+
+\section{Cuadros}
+
+\begin{center}
+\begin{tabular}{ c c c } 
+
+ cell1 & cell2 & cell3 \\ 
+  \hline\hline
+ cell4 & cell5 & cell6 \\ 
+ cell7 & cell8 & cell9 \\ 
+\end{tabular}
+\end{center}
+
+
+\begin{longtable}[c]{llr}
+Animal & Description & Price (\$) \\ \hline
+\endfirsthead
+%
+\multicolumn{3}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+Animal & Description & Price (\$) \\ \hline
+\endhead
+%
+\hline
+\endfoot
+%
+\endlastfoot
+%
+Gnat & per gram & 13.65 \\
+ & each & 0.01 \\
+Gnu & stuffed & 92.50 \\
+Emu & stuffed & 33.33 \\
+Armadillo & frozen & 8.99 \\ \hline
+\caption{}
+\label{tab:my-table}\\
+\end{longtable}
+
+\newpage
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{landscape}
+\begin{longtable}[c]{@{}lllllll@{}}
+\caption{}
+\label{tab:my-table}\\
+\toprule
+\textbf{Entidad\_Federal} & \textbf{Ppto\_2008} & \textbf{Ppto\_2009} & \textbf{Ppto\_2010} & \textbf{Ppto\_2011} & \textbf{Ppto\_2012} & \textbf{Ppto\_2013} \\* \midrule
+\endfirsthead
+%
+\multicolumn{7}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+\toprule
+\textbf{Entidad\_Federal} & \textbf{Ppto\_2008} & \textbf{Ppto\_2009} & \textbf{Ppto\_2010} & \textbf{Ppto\_2011} & \textbf{Ppto\_2012} & \textbf{Ppto\_2013} \\* \midrule
+\endhead
+%
+\bottomrule
+\endfoot
+%
+\endlastfoot
+%
+Distrito\_Capital &  &  & 3535546 & 30500000 &  & 115556917 \\
+Amazonas & 12863177 & 18736380 & 13584855 &  & 6557976 & 7478859 \\
+Anzoátegui & 16242280 & 18381552 & 20798136 & 28149261 & 39614534 & 51082762 \\
+Apure & 2755545 & 6792503 & 3496952 & 7029974 & 4847104 & 7412090 \\
+Aragua & 16211000 & 20308584 &  &  &  & 22329307 \\
+Barinas & 6954199 & 8344000 & 6308503 & 7759458 & 9699322 &  \\
+Bolívar & 8573796 & 14516828 &  & 11008438 & 11972818 & 11972818 \\
+Carabobo & 18003802 & 23063994 & 16172474 & 20072685 & 22707511 & 7907455 \\
+Cojedes & 2558902 & 3141634 & 2517307 & 2919903 &  & 7828899 \\
+Delta\_Amacuro & 1228675 & 4560499 & 3588661 & 2729243 &  & 4945476 \\
+Falcón & 25330049 & 5583829 & 5527953 & 8515082 &  & 16890000 \\
+Guárico & 3723047 & 4275327 & 4268394 & 5125935 & 6584497 & 9497948 \\
+Lara & 18747000 & 20673030 & 24476956 &  & 25951513 & 29548263 \\
+Mérida & 7519281 & 10382537 & 8807210 & 6634779 &  & 16518860 \\
+Miranda & 64665950 & 30852810 & 22770586 & 44810982 & 39736599 & 42150424 \\
+Monagas & 2651443 & 3404648 & 2330545 & 3898450 &  & 7789471 \\
+Nueva\_Esparta & 19462300 & 12509577 & 13587672 & 16595033 & 17668198 & 18461354 \\
+Portuguesa & 13176705 & 13279593 & 12816929 & 13534872 & 16353291 & 18659474 \\
+Sucre & 18494366 & 23709782 & 16309686 & 19912426 & 29392895 & 43465698 \\
+Táchira & 14359323 & 18992155 & 20673197 & 29756213 & 46944026 & 39678951 \\
+Trujillo & 5280846 & 6884106 & 5416195 & 9797679 &  & 11085415 \\
+Yaracuy &  &  &  &  &  &  \\
+Zulia & 16420477 & 22610447 & 19697032 & 21174370 & 32388128 & 53052143 \\
+Vargas & 5781994 & 6824525 &  &  &  &  \\* \bottomrule
+\end{longtable}
+\end{landscape}
+
+
+Table \ref{table:data} is an example of referenced \LaTeX{} elements.
+ 
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c c c c||} 
+ \hline
+ Col1 & Col2 & Col2 & Col3 \\ [0.5ex] 
+ \hline\hline
+ 1 & 6 & 87837 & 787 \\ 
+ 2 & 7 & 78 & 5415 \\
+ 3 & 545 & 778 & 7507 \\
+ 4 & 545 & 18744 & 7560 \\
+ 5 & 88 & 788 & 6344 \\ [1ex] 
+ \hline
+\end{tabular}
+\caption{Cuadro para probar captions y etiquetas}
+\label{table:data}
+\end{table}
+
+\end{document}

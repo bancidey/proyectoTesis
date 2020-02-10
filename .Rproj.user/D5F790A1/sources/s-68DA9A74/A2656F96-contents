@@ -1,0 +1,94 @@
+---
+documentclass: book
+classoption: a4paper
+#classoption: a4paper,oneside
+#bibliography: bib/library.bib
+bibliography: ["bib/library.bib", "bib/paquetes.bib"]
+#csl: methods-in-ecology-and-evolution.csl
+csl: acm-sig-proceedings-long-author-list.csl
+urlcolor: blue #black
+linkcolor: blue #black
+link-citations: yes
+fontsize: 12pt # 10pt,11pt
+geometry: margin = 2.5cm
+output: 
+  pdf_document: 
+    keep_tex: no
+    number_sections: yes
+#    toc: yes
+    fig_caption: yes
+    includes:
+      in_header: latex/latex_preambulo.tex
+      after_body: latex/latex_antes_enddoc.tex
+---
+
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.path = 'figurasR/',
+                      echo = FALSE, warning = FALSE, message = FALSE,
+                      fig.pos="H",fig.align="center",out.width="95%",
+                      cache=FALSE)
+
+```
+
+
+<!-- \setcounter{chapter}{2} -->
+<!-- \setcounter{chapter}{2} escribir 2 para capítulo 3  -->
+<!-- \pagenumbering{arabic} -->
+
+\fancyhead[LE,RO]{\scriptsize\rightmark}
+\fancyfoot[LO,RE]{\scriptsize\slshape \leftmark}
+\fancyfoot[C]{}
+\fancyfoot[LE,RO]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+# Introducción
+
+## Motivación
+
+Existe una creciente percepción acerca de la pérdida del valor intangible que implica la identidad cultural de una nación. Si bien la cultura siempre fluye a través de los pueblos, la crítica se dirige al rol hegemónico impuesto por la llamada globalización. Gracias al desarrollo de nuevas tecnologías en comunicación e información y la difusión masiva e intensiva de los valores culturales de quienes monopolizan tales recursos, se ha promovido una cultura cosmopolita que amenaza con reducir la diversidad cultural del planeta. De allí que los países defiendan los valores culturales que los identifican y distinguen como únicos en relación a los demás, a través de políticas públicas y sus correspondientes presupuestos. Para medir la gestión cultural se requieren modelos causales que generen indicadores de avance y orienten futuras intervenciones. Con este objetivo, la presente investigación aspira construir un *Modelo General Lineal Multinivel o MGLM* para el caso venezolano, utilizando técnicas del *aprendizaje automático o machine learning*.
+
+
+Venezuela incluye en el Preámbulo de su Constitución [@Constitución], el conjunto de valores que la identifican como país multiétnico y pluricultural. Tales fines se despliegan en los objetivos de los planes nacionales plurianuales y en las leyes de presupuestos y en otras normas, como la Ley Orgánica de la Cultura [@LOC], a través de la asignación de recursos a entes, programas y proyectos de naturaleza cultural. La duda es si tal accionar es eficaz para preservar y fortalecer la identidad cultural del país en un mundo globalizado.
+
+
+La institucionalidad cultural, cuyo ente rector oficial actual es el Ministerio del Poder Popular para la Cultura, en adelante MPPC, es un sistema complejo con múltiples organismos públicos, privados y comunitarios asociados,  así como individualidades y agrupaciones de variada índole, todas ellas dedicadas al quehacer cultural. Este sistema, que se remonta a la independencia al crearse los primeros entes culturales, evoluciona siguiendo ciertas reglas probabilísticas que deben ser develadas con las herramientas disponibles de la ciencia de datos. Así, pueden identificarse patrones entre miles o millones de datos, aparentemente inconexos, almacenados y registrados en multiplicidad de formatos en los entes que forman el sistema y de donde provendrá la información para la investigación.
+
+
+En Venezuela la cultura suele analizarse desde las humanidades y ciencias sociales, por lo que una investigación como la presente contribuiría a ampliar el foco, proporcionando métricas para comparar el avance con respecto a los objetivos nacionales planteados y ubicarse en el mapa internacional de la cultura. Se contribuiría además, a suplir la actual carencia de un sistema de información estadística de la cultura, evidenciada por Castellanos [@Castellanos] en los informes del Sistema Subregional de Información Estadística del MERCOSUR, SIC SUR, en los cuales Venezuela aparece a lo largo de varios años, con datos desactualizados o inexistentes  en diversas dimensiones culturales.
+
+
+
+## Definición de Cultura según la UNESCO
+
+A efectos de la investigación se empleará la definición formulada en el año 2001, en la Declaración Universal sobre la Diversidad Cultural [@UNESCO_2011]:
+
+>La cultura debe ser considerada como el conjunto de los rasgos distintivos espirituales y materiales, intelectuales y afectivos que caracterizan a una sociedad o a un grupo social y que abarca, además de las artes y las letras, los modos de vida, las maneras de vivir juntos, los sistemas de valores, las tradiciones y las creencias[^nota1].
+
+[^nota1]: UNESCO, Declaración Universal sobre la Diversidad Cultural (2001) http://portal.unesco.org/es/ev.php‐
+URL_ID=13179&URL_DO=DO_TOPIC&URL_SECTION=201.html
+.
+
+UNESCO propone un conjunto de indicadores para medir la cultura en cada país concentrada en tres ejes principales, como:
+
+1. Un sector de actividad económica;
+
+2. Una serie de recursos que agrega valor a las intervenciones de desarrollo y aumenta su impacto; y
+
+3. Un marco sostenible para la cohesión social y la paz, indispensable para el desarrollo humano.
+
+También promueve un conjunto de Indicadores de Cultura para el Desarrollo [@UNESCO_2012] conocidos por sus siglas IUCD[^nota2], los cuales están dirigidos a la sensibilización y formulación de políticas, fundamentados en una metodología especialmente diseñada para que los países midan el papel de la cultura en los procesos de desarrollo nacionales. Los IUCD apuntan a que los países elaboren políticas mejor informadas, basadas en datos reales, y sobre todo integrar la cultura en las estrategias de desarrollo, contribuyendo a la implementación de la Convención de la UNESCO de 2005 sobre la Protección y la Promoción de la Diversidad de las Expresiones Culturales.  Además, UNESCO proporciona una metodología y un manual [@Indicadores_de_UNESCO_2011; @Indicadores_UNESCO_2014] con 22 indicadores y siete (7) dimensiones del desarrollo: Economía, Educación, Gobernanza, Participación Social, Igualdad de Género, Comunicación  y Patrimonio. En la Metodología se utilizan algunas de estas dimensiones y otras más para referenciar las variables explicativas del modelo. Sin embargo es prudente advertir siguiendo a Bonet [-@Bonet,p. 3] que: 
+
+> Más allá de los objetivos y marco metodológico de cada investigación en particular, no existen modelos globales y completos de análisis del sector cultural, ni probablemente nunca existirán. El contexto de cualquier ejercicio de diseño de un plan de estadísticas culturales debe, pues, aceptar la existencia de diversos modelos interpretativos al mismo tiempo, a veces a medio construir, que responden a enfoques disciplinares dispares. Uno debe aprender a trabajar con información asimétrica en un campo de actividad donde se mezcla lo mercantil con lo no mercantil, lo público con lo privado, lo industrial con lo artesanal, el bien con el servicio, lo tangible con lo intangible, etc. Ningún análisis permite por si solo una evaluación exacta de la realidad, y del impacto social y económico sobre un territorio de las distintas políticas culturales públicas y privadas existentes.
+
+[^nota2]: Los IUCD se encuentran en http://www.unesco,org.com/creativity/cdis.
+
+Esta óptica será respetada en la investigación.
+
+
+
+
+

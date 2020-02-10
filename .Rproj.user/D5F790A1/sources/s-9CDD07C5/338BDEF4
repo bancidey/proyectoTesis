@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580150940817.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2602998867",
+    "id" : "338BDEF4",
+    "lastKnownWriteTime" : 1580151772,
+    "last_content_update" : 1580151772234,
+    "path" : "~/MemoriaTFE/capitulo01.Rmd",
+    "project_path" : "capitulo01.Rmd",
+    "properties" : {
+        "cursorPosition" : "61,178",
+        "scrollLine" : "58"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

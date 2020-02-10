@@ -1,0 +1,5 @@
+"0","month_buffer <- 2"
+"0",""
+"0","month_date_range <- seq(min(df$date) - months(month_buffer), max(df$date) + months(month_buffer), by='month')"
+"0","month_format <- format(month_date_range, '%b')"
+"0","month_df <- data.frame(month_date_range, month_format)"

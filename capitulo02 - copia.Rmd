@@ -1,0 +1,123 @@
+---
+documentclass: book
+classoption: a4paper
+#classoption: a4paper,oneside
+#bibliography: bib/library.bib
+bibliography: ["bib/library.bib", "bib/paquetes.bib"]
+#csl: methods-in-ecology-and-evolution.csl
+csl: acm-sig-proceedings-long-author-list.csl
+urlcolor: blue #black
+linkcolor: blue #black
+link-citations: yes
+fontsize: 12pt # 10pt,11pt
+geometry: margin = 2.5cm #1.2in
+output: 
+  pdf_document: 
+    keep_tex: no
+    number_sections: yes
+#    toc: yes
+    fig_caption: yes
+    includes:
+      in_header: latex/latex_preambulo.tex
+      after_body: latex/latex_antes_enddoc.tex
+---
+
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.path = 'figurasR/',
+                      echo = FALSE, warning = FALSE, message = FALSE,
+                      fig.pos="H",fig.align="center",out.width="95%",
+                      cache=FALSE)
+
+```
+
+
+<!-- \setcounter{chapter}{2} -->
+<!-- \setcounter{chapter}{2} escribir 2 para capítulo 3  -->
+<!-- \pagenumbering{arabic} -->
+
+\fancyhead[LE,RO]{\scriptsize\rightmark}
+\fancyfoot[LO,RE]{\scriptsize\slshape \leftmark}
+\fancyfoot[C]{}
+\fancyfoot[LE,RO]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+# Objetivos de la investigación
+
+
+## Planteamiento
+
+Uno de los objetivos centrales de la política cultural es el *incremento de la participación*, entendida como el grado de involucramiento de la población del país con las actividades culturales promovidas por el sistema cultural institucional.  En el sistema cultural venezolano, se identifican dos vertientes, la *institucional o convencional*, que hunde sus raíces en lo que se solía llamar como “Bellas Artes”, y la identificada con la llamada “Cultura Popular”. La primera tiene rasgos de actividad de élites, vinculada fuertemente a la existencia de sedes especializados donde se cultiva a lo largo de procesos educativos formales, y luego se comparte y difunde en espacios creados especialmente para ello. Su desarrollo ha sido paralelo al del crecimiento de los recursos económicos del país desde los inicios del siglo XX con la conversión de país agrícola a petrolero.  La participación en la cultura convencional, dependerá del crecimiento y estado de la infraestructura y del talento humano disponible. Estos factores tendrán mayores posibilidades de desarrollarse, si se conjugan los recursos y la voluntad política y social para impulsarlos. Este último elemento es importante porque aunque la mayor disponibilidad de recursos aparenta ser una condición para el crecimiento de la actividad cultural, el resultado obtenido puede ser escaso e incluso nulo, si el interés predominante está en el desarrollo de otras iniciativas con poco o ningún valor cultural. Un interés real se reflejará en la proporción de los presupuestos globales nacionales, estadales y municipales dedicados a la cultura, así como en el aporte económico del sector privado y comunitario. También se evidenciará en la cantidad y tipos de eventos programados y ejecutados desde la institucionalidad cultural, cada una con su propia capacidad para atraer interesados.
+
+
+La participación cultural convencional crecerá en la medida que exista disponibilidad de recursos para impulsar la formación del talento y el desarrollo de una infraestructura de apoyo, junto a una oferta variada y atractiva de eventos. La mayor riqueza de una región se relaciona a su vez, con una pujante actividad económica, presencia significativa de población urbana y posiblemente alto nivel de vida, reflejado en niveles educativos superiores y menores niveles de pobreza. Estos hechos se retroalimentan, convirtiéndose en *atractores* generadores de desigualdad entre las regiones, favoreciendo la concentración de infraestructura y actividades culturales de manera creciente en unas pocas en detrimento de la mayoría. Esta dinámica coloca a los habitantes de estas regiones en riesgo de ser más fácilmente tentados por la cultura superficial y fragmentaria de la globalización, llevándolos a desconocer o menospreciar los valores culturales nativos. Es de esperar que estos factores, y su dinámica compleja, influyan en la participación cultural convencional.
+
+
+La cultura popular es más bien fruto del saber y quehacer diario comunitario, acumulado a lo largo de años e incluso siglos, convirtiéndose en tradición, de modo que sale adelante con más o menos independencia de los recursos que el sector público o privado puedan invertir. La participación ocurre aquí como un fenómeno vegetativo, en el cual la práctica se inicia en el seno de la propia familia o comunidad, de abuelos a nietos, sin requerir necesariamente la existencia de una institucionalidad formal para su formación o difusión. La organización aparece, pero no de manera externa a los propios practicantes o asistentes de la actividad. Ésta última puede realizarse en cualquier espacio si así lo decide el cultor o la comunidad. El rol como participante se incrementa en la medida que el individuo siente que se refuerza su sentido de pertenencia a la comunidad, el orgullo por lo que es propio y distintivo, y además se eleva el prestigio y la valoración de los ejecutantes.
+
+
+La participación en la cultura popular dependerá de la presencia de un fuerte sentido de identidad o pertenencia cultural a una determinada comunidad. Esta se desarrolla a través de la difusión o transmisión de los memes culturales de una generación a la siguiente. Además, exige la concurrencia de dos situaciones: primero, la convivencia de generaciones distintas en un mismo espacio y segundo, que la nueva generación perciba la práctica como importante o prestigiosa para quien la ejecuta, y por tanto digna de ser cultivada y preservada. Es más factible encontrar esta conjunción en espacios rurales e indígenas que en las grandes ciudades. En estas últimas con comunidades y familias nucleares cada vez más pequeñas y desintegradas, los adultos mayores son considerados más como una carga que como los repositorios de una cultura. La situación tiende a destruir las tradiciones y a desplazar los valores culturales propios, por los difundidos por las grandes transnacionales de la comunicación y del mundo digital.
+
+
+Será más probable entonces, que la participación en la cultura popular ocurra en poblaciones rurales o indígenas, con largos períodos de asentamiento en los cuales haya sido posible madurar una historia y una cultura con sello propio y donde los cultores, en especial aquellos de mayor edad, sean apreciados. También podría ocurrir en regiones urbanas con comunidades que siguen manteniendo un fuerte vínculo con lo rural. A su vez, la asistencia a eventos culturales de tipo popular, oscilará a lo largo del año de acuerdo a las actividades conmemorativas de eventos mágico-religiosos, históricos, ecológicos, climáticos, vinculados al cultivo u otras faenas laborales. El turismo cultural es un indicador de la presencia de los factores expuestos, dado que las personas se dirigen con preferencia hacia estos lugares durante esas fechas en cantidades que superan los cientos de miles o millones de personas.
+
+
+Si bien la presencia de recursos públicos y privados puede impulsar la participación en la cultura popular, su ausencia no implica el fin de estas actividades. Y, por otro lado, su uso incontrolado bajo una errónea interpretación de la participación puede, y ha  llevado, a tergiversar o sacrificar la esencia de una práctica cultural en aras de una supuesta mayor aceptación por el público. La disponibilidad de recursos solo tendrá éxito en este caso, si existe una comunidad que se identifica o es susceptible de identificarse con los valores que se intenta impulsar. Es de esperar que la participación en la cultura popular no sea influida decisivamente por un incremento en la actividad económica, la infraestructura disponible, o los niveles de vida de la población, porque ella ocurre sin problema, en lugares alejados de las grandes concentraciones urbanas donde no es raro que la población tenga un nivel de vida más bajo, mayor carencia de servicios y niveles educativos inferiores.
+
+
+La teoría expuesta puede *representarse* vía un modelo estocástico con ayuda del machine learning que capture los elementos complejos del sistema, como los *efectos no lineales y las interrelaciones* entre los distintos *niveles jerárquicos* del sistema. Para mantener al modelo simple pero que aporte información valiosa, se elige como variable dependiente a la *asistencia del público en los eventos promovidos por la institucionalidad cultural durante el año 2018*. Esta variable es afectada por diversos elementos: disponibilidad de recursos, talento humano, infraestructura cultural, actividad económica, oferta y tipo de eventos, temporada del año, tipo de población y nivel de vida. Todos ellos pueden incorporarse directamente o a través de variables indicadoras o *proxies* de los mismos y son susceptibles de ser influenciadas por la acción pública. Lo esencial para la gestión de las políticas culturales es que el modelo refleje adecuadamente la teoría cultural que se intenta representar con un conjunto de variables interpretable por los responsables de su manejo. 
+
+
+Por las razones expuestas se construirá un *Modelo General Lineal Múltinivel o Jerárquico*[^2.1],  en adelante MGLM. Este tipo de modelo permite incluir relaciones no lineales entre las variables predictoras y la dependiente, así como términos de interacción entre varios niveles, si los mismos son sospechados de antemano. En este caso, la asistencia es medida a nivel de municipios y luego es agrupada por estados. El anidamiento implica que los municipios de un estado reciben influencias comunes, por lo cual las observaciones de municipios de un mismo estado, no son independientes entre sí, lo que se traduciría, en una subestimación de los errores estándar de los coeficientes de regresión. A su vez, se obtendrían intervalos de confianza estrechos y p-valores pequeños, lo que conduce a interpretaciones erróneas acerca del efecto de una variable predictora sobre la dependiente, cuando en realidad el efecto podría ser producto del azar, es decir un incremento en la probabilidad de cometer un error de Tipo I.
+
+
+[^2.1]: Otras denominaciones: efectos mixtos [@Littell], mixtos, datos anidados, coeficientes aleatorios [@Kreft], componente de varianza [@Searle; @Longford], efectos o parámetros aleatorios o diseños de parcelas divididas y los sociólogos los refieren como análisis contextual [@Lazarsfeld]. Todos estos, aunque no son exactamente los mismos modelos son muy similares.
+
+Un Modelo Lineal Generalizado[^2.2] sería insuficiente para reflejar la influencia estadal del desarrollo socio-económico en la cultura, en cambio los MGLM [@Hox; @Lee_Nelder;@LeeRo], utilizan coeficientes aleatorios como variables de otros niveles, mostrando adecuadamente la estructura jerárquica de los datos. Con los MGLM se obtienen estimaciones adecuados de los errores estándar, se facilita el análisis de la variación entre grupos y se construyen pruebas válidas e intervalos de confianza. Aunque el análisis a un nivel puede realizarse agregando o desagregando los datos se pueden cometer las *falacias ecológica o atomística*. En la primera se infieren la naturaleza de los municipios, a partir de las estadísticas agregadas del estado, y en la segunda, el error se comete al considerar que las asociaciones encontradas en el nivel de los municipios, pueden extrapolarse a los estados. Como la asimetría territorial entre las regiones venezolanas es un hecho generalizado [@Ancidey2018], sería un grave error descuidar estas diferencias.
+
+[^2.2]:Los Modelos Lineales Generalizados o MLGe, no deben confundirse con los Modelos Generales Lineales  o MGL, aunque estos últimos pueden verse como un caso especial de los primeros con enlace de identidad y respuestas normalmente distribuidas.
+
+## Objetivo de la investigación
+
+
+## Objetivo general
+
+
+Representar mediante un modelo multinivel la dinámica subyacente a la institucionalidad cultural de Venezuela.
+
+
+## Objetivos específicos
+
+
+1.	Determinar las unidades de análisis documentales de investigación que permiten la construcción de la Base de Datos, a través de la recopilación, integración, depuración, normalización e imputación de los registros existentes.
+
+2.	Investigar las variables inherentes de  la institucionalidad cultural venezolana mediante  un análisis estadístico exploratorio de datos con ayuda de gráficos, correlaciones, asociaciones, gráficos de dispersión y análisis de componentes principales o de correspondencia.
+
+3.	Construir el modelo multinivel a partir de las variables identificadas como de mayor influencia en la dinámica cultural institucional.
+
+4.	Proponer indicadores de gestión en base al modelo sobre la eficacia de las políticas culturales en cuanto a la participación.
+
+
+## Justificación 
+
+El desarrollo de nuevas metodologías para el manejo de los datos es un aporte a la eficiencia  y mejora de los procesos de los entes públicos responsables de la cultura en Venezuela. Con un mejor manejo de los datos será posible realizar de manera más fácil y rápida, el control y seguimiento de las actividades realizadas y contribuir a una cultura del dato, necesaria en toda la administración pública.
+
+
+La utilidad del modelo estará en su capacidad predictiva a partir de un conjunto manejable de las variables más pertinentes. La disponibilidad de un modelo con capacidad predictiva o pronóstica, contribuirá a la evaluación del desempeño institucional de los entes culturales del país y en particular para el desarrollo de políticas públicas culturales con fundamentos científicos.
+
+
+## Limitaciones
+
+La ausencia de una cultura del dato en las instituciones venezolanos tiene como consecuencia que la disponibilidad de estos últimos sea una de las principales limitaciones. La inexistencia de registros  o bases de datos sistemáticas acerca de la cultura es uno de los mayores obstáculos. Aquellos disponibles se reducen a tablas en hojas de cálculo que llevan las instituciones para sus fines particulares. Estos no guardan coherencia entre sí y se requiere de esfuerzo e investigación con los responsables para comprender el significado de las variables utilizadas. Empero, es una regla metodológica esencial en la investigación preliminar, no descartar ningún dato sin tener evidencia firme de su inutilidad, por ser un error no corregible o ser redundante. Esto obliga a una afinación mayor en los procesos de imputación de datos y ser más creativos en el uso de los métodos usuales de la literatura.
+
+La investigación se enfocará en los entes oficiales por su responsabilidad en la conducción de las políticas públicas culturales. La institucionalidad en manos privadas y comunitarias se integra dentro del marco global de las políticas públicas culturales.  El propósito es desarrollar el modelo al mayor nivel de desagregación geográfica posible para tomar en cuenta las diferencias y similitudes, las cuales son suavizadas a mayores niveles de agregación. De allí la elección de realizar los análisis hasta el nivel de municipios del país, dada la ausencia de datos claves para las parroquias. 
+
+
+
+
+
+
+

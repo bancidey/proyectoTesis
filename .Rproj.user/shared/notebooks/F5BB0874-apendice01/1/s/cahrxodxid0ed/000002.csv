@@ -1,0 +1,5 @@
+"0","knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE    ,fig.path = 'figurasR/',"
+"0","                      echo = TRUE, warning = FALSE, message = FALSE,"
+"0","                      fig.pos=""H"",fig.align=""center"",out.width=""95%"","
+"0","                      cache=FALSE)"
+"0",""

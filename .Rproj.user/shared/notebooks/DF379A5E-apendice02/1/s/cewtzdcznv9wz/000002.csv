@@ -1,0 +1,2 @@
+"0","library(png)"
+"0","knitr::include_graphics(""figurasR/Plataformas-1"",auto_pdf = TRUE )"

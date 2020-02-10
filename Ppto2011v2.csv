@@ -1,0 +1,23 @@
+Ámbito;Ingreso;Egreso;Sector;Monto.Bs.F
+N;País;Nacional;Cultura y C. S.;3849037
+N;País;Nacional;Educación;58714739
+N;País;Nacional;Cs. y Tecn.;2414778
+N;País;Nacional;Viv., D. Urb. y S. Conexos;3958174
+N;País;Nacional;Salud ;32097454
+N;País;Nacional;D. Social y Particip.;27294787
+N;País;Nacional;Seg. Social ;56564063
+N;País;Nacional;S. Productivos;55119495
+N;País;Nacional;Serv. Grales.;35154478
+N;País;Nacional;Deuda y Transf. Ext.;33016949
+N;País;Municipal;Cultura y C. S.;131584
+N;País;Municipal;G. mun. no clasif.;2692890
+N;País;Municipal;O. gastos. mun.;10403130
+N;País;Estadal;Cultura y C. S.;480597
+N;País;Estadal;G. estad. no clasif.;4699011
+N;País;Estadal;O. G. Estadales;46916742
+R;Mun.;Municipal;Cultura y C. S.;157246
+R;Mun.;Municipal;G. mun. no clasif.;3218075
+R;Mun.;Municipal;O. gastos. mun.;12432017
+R;Estados;Estadal;Cultura y C. S.;19160
+R;Estados;Estadal;G. estad. no clasif.;187340
+R;Estados;Estadal;O. G. Estadales;1870476

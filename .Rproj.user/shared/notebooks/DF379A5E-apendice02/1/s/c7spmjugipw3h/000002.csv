@@ -1,0 +1,5 @@
+"0","library(kableExtra)"
+"0","Entes_C<-read.csv(""Entes culturales.csv"",header = TRUE,sep = "";"",check.names = F)"
+"0","kable(Entes_C, format =""latex"", booktabs = TRUE, caption=""Otros Entes del Poder Público Nacional en 2018"", align='llr')%>%"
+"0","kable_styling(latex_options = c(""scale_down"",""HOLD_position""))%>%"
+"0","column_spec(1, width = ""10em"")"

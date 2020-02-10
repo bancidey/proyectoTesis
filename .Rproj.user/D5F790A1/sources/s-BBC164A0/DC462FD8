@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1578945977484.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "DC462FD8",
+    "lastKnownWriteTime" : 1573656802,
+    "last_content_update" : 1573656802,
+    "path" : "~/MemoriaTFE/tfe_principal.Rmd",
+    "project_path" : "tfe_principal.Rmd",
+    "properties" : {
+        "cursorPosition" : "20,4",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

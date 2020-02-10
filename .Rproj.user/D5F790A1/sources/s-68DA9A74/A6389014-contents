@@ -1,0 +1,339 @@
+---
+title: "Twitter"
+author: "Bernardo Ancidey"
+date: "1 de noviembre de 2019"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+El siguiente documento contiene las operaciones necesarias para construir un app que le indique al usuario el sentimiento de mercado respecto a una o varias acciones de bolsa. La fuente de datos son tweets que contengan texto referente a las acciones de mercado en los días más recientes.
+
+
+```{r}
+Sys.setenv("plotly_username"="bancidey")
+Sys.setenv("plotly_api_key"="9q77lxOw72lBW7dHblax")
+```
+
+
+
+
+
+## Pasos para resolver un problema general de análisis de sentimientos
+
+
+1. Comprender el problema
+
+2. Preparación
+
+3. Extracción de tweets con la aplicación Twitter
+
+4. Preprocesamiento y limpieza de los tweets para análisis posteriores
+
+5. Obtener puntuación de sentimiento para cada tweet
+
+6. Extracción de tweets con sentimientos positivos, negativos y neutros
+
+7. Presentación de resultados
+
+
+
+##El problema##
+
+El objetivo es detectar el sentimiento del mercado en los tweets. En aras de la simplicidad, decimos que un tweet contiene expresiones de sentimiento si tiene un sentimiento alcista o bajista asociado con él. Por lo tanto, la tarea es distinguir los tweets alcistas o bajistas de los tweets neutros.
+
+Formalmente, dada una muestra de formación de tweets y etiquetas, la etiqueta “1” denotará que el tweet es alcista y la etiqueta “2” que el tweet es bajista, y la “0” que es neutral. El objetivo es predecir las etiquetas en el conjunto de datos de prueba dado.
+
+
+## Preparación
+Cargamos los paquetes que se utilizarán en el análisis de sentimiento
+Los paquetes más importantes son:
+
+* tidyverse: para importar multiples paquetes que facilitarán el análisis y manipulación de datos
+
+
+* tidytext: herramientas para manipular texto
+
+
+* tm: herramientas de mineria de textos
+
+
+* lubridate: para fechas de manera consistente, y 
+
+
+* zoo y scales: para realizar tareas comunes de análisis y presentación de datos.
+
+
+* SnowballC: minería y análisis de textos
+
+
+* rtweet: Para extraer tweets de Twitter
+
+
+* Syuzhet: para el análisis de sentimientos
+
+
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(tm)
+library(lubridate)
+library(zoo)
+library(scales)
+library(rtweet)
+library(SnowballC)
+library(twitteR)
+library(syuzhet)
+```
+
+
+## Extracción de tweets con la aplicación Twitter
+
+1. Selección de la muestra representativa previo estudio del campo, tomando en cuenta el tiempo y lugar de la bolsa en donde se juegan las acciones. La recuperación se efectúa en línea tomando muestras desde el momento que se hace la consulta hasta que se complete la cantidad total de tuist solicitados.
+
+2. Seleccionar las variables que son relevantes de las 88 que trae cada twitter:
+ 
+  - Fecha/Hora
+  - Contenido	
+  - autor	
+  - tweet_id
+  - País	
+  - Código de paísa
+  - Georeferencia
+  - Coordenadas
+  - Lugar según usuario
+
+
+
+Aplicando los criterios anteriores se extraen los datos con los tweets, por localización y palabra, obtenidos usando la API de Twitter.
+
+
+La función siguiente realiza el proceso de extracción de *n=100* tweets, localizados en *EEUU* para el caso de las acciones de la empresa Apple, identificada con la etiqueta *AAPL*:
+
+```{r ExtraeTwitter}
+
+Ext <- function(loc,palabra,num){
+  
+  
+  rt <- search_tweets(q=palabra,
+     geocode = lookup_coords(loc), n = num
+  )
+  
+  
+  rt <- rt[c("created_at","text","screen_name","status_id","country",
+             "country_code","location" )]
+  
+}
+
+
+l <- as.data.frame(Ext("usa","AAPL",100))
+write.csv(l, file = "MyData.csv")
+
+class(l)
+write.csv(l, "datos", sep = ",")
+
+write.csv2(l,file = "datos.csv")
+
+Fecha <- l$created_at
+contenido <- l$text
+Autor <- l$screen_name
+tweet_id <- l$status_id
+```
+
+
+
+
+## Preprocesamiento y limpieza de los tweets para análisis posteriores
+
+
+El campo 'text' contiene la parte de tweet, hashtags y URLs. Se eliminan los hashtags y URLs del campo de texto para que sólo quede la parte principal del tweet para ejecutar el análisis de sentimientos. Se observa el contenido de los primeros 6 tweets seleccionados:
+
+```{r}
+head(l$text)
+```
+
+
+Se eliminan los url, hasthag y  otros caracteres especiales con la función gsub.
+
+```{r}
+tweets.df2 <- gsub("http.*","",l$text)
+ 
+tweets.df2 <- gsub("https.*","",tweets.df2)
+ 
+tweets.df2 <- gsub("#.*","",tweets.df2)
+ 
+tweets.df2 <- gsub("@.*","",tweets.df2)
+
+```
+
+Con la limpieza  los primeros 6 tweets lucen así:
+
+```{r}
+head(tweets.df2)
+```
+
+
+Ahora, sólo queda la parte relevante de los tweets y se puede ejecutar la parte de análisis de sentimientos sobre los datos.
+
+
+## Obtener puntuación de sentimiento para cada tweet
+
+
+Primero se obtiene la puntuación de emoción para cada uno de los tweets. *Syuzhet* divide la emoción en 10 emociones diferentes: ira, anticipación, asco, miedo, alegría, tristeza, sorpresa, confianza, negativo y positivo.
+
+
+```{r}
+word.df <- as.vector(tweets.df2)
+emotion.df <- get_nrc_sentiment(word.df)
+emotion.df2 <- cbind(tweets.df2, emotion.df) 
+head(emotion.df2)
+```
+
+
+El resultado muestra las diferentes emociones presentes en cada uno de los tweets.
+Ahora, se usa la función get_sentiment para extraer la puntuación de sentimiento para cada uno de los tweets. Primero el más positivo:
+
+```{r}
+sent.value <- get_sentiment(word.df)
+ 
+most.positive <- word.df[sent.value == max(sent.value)]
+ 
+most.positive
+```
+
+y ahora el más negativo:
+
+```{r}
+sent.value <- get_sentiment(word.df)
+ 
+most.negative <- word.df[sent.value == min(sent.value)]
+most.negative
+```
+
+
+Obsérvese cómo se ha calculado la puntuación de cada uno de los tweets. En total, hay *100* tweets que se estan evaluando, así que aparecerán *100* puntuaciones positivas/negativas, una para cada uno de los tweets.
+
+
+```{r}
+sent.value
+```
+
+
+## Extracción de tweets con sentimientos positivos, negativos y neutros
+
+
+Ahora, se separan los tweets positivos y negativos en función de la puntuación asignada a cada uno de los tweets.
+
+*Tweets positivos*
+
+```{r}
+positive.tweets <- word.df[sent.value > 0]
+head(positive.tweets)
+```
+
+*Tweets negativos*
+
+```{r}
+negative.tweets <- word.df[sent.value < 0]
+head(negative.tweets)
+```
+
+*Tweets neutrales*
+```{r}
+neutral.tweets <- word.df[sent.value == 0]
+head(neutral.tweets)
+summary(neutral.tweets)
+```
+
+
+*Alternativa para clasificar los tweets como Positivos, Negativos o Neutros*
+
+```{r}
+category_senti <- ifelse(sent.value < 0, "Negative", ifelse(sent.value > 0, "Positive", "Neutral"))
+category_senti<-as.data.frame(category_senti)
+# Se traducen los niveles al español
+levels(category_senti$category_senti) <- c("Negativo", "Neutral","Positivo")
+head(category_senti)
+
+```
+
+
+
+
+## Presentación de resultados al usuario con App de Shiny
+Para la presentación de resultados se diseña un app de Shiny que permita a usuario, obtener una calificación del sentimiento del mercado respecto a una o varias acciones. Para ello el usuario deberá seleccionar:
+
+- Acción: Escoja una acción.
+
+- Localización: Elija uno o varios países.
+
+- Cantidad de tweets: seleccione un número entero positivo entre 10 y 100 mil.
+
+
+```{r}
+fluidPage(
+   # Título de la app
+  titlePanel("Sentimiento del mercado usando twitter"),
+  
+  br(),
+  fluidRow(
+    # Descripción de las tres entradas de datos del usuario en tres columnas
+    column(4,
+           h4("Selección de los datos"),
+           p("Para realizar el análisis de sentimiento de mercado acerca de alguna de las acciones de las principales empresas del mundo, debe seleccionar la acción por su etiqueta, el país de donde provendrán los tweets y la cantidad de tweets que se usarán como muestra en el análisis. Comience eligiendo la acción:")
+           ),
+    column(4,
+         h4("Localización"),
+         p("Seleccióne el país o países donde interesa conocer el sentimiento del mercado")
+         ),
+    column(4,
+         h4("Cantidad de tweets"),
+         p("Seleccióne el número de tweets para el análisis")
+         )
+  ),
+  
+  # Caja para seleccionar los datos de la acción, país y Nº de tweets que serán analizados
+fluidRow(
+  column(4,
+         hr(),
+  selectInput("select", label = h4("Acción"), 
+   choices = list("AAPL" = "AAPL", "MSFT" = "MSFT", "AMZN" = "AMZN","GOOG" = "GOOG","GOOGL" = "GOOGL","FB" = "FB","BRK.A" = "BRK.A","BABA" = "BABA","JPM" = "JPM","V" = "V"), 
+   selected = 1)),
+    
+  
+  # Caja para escoger la localización del país de donde provienen los tweets
+  column(4,
+         hr(),
+  selectInput('in1', h4('Opciones de país'), c("EEUU" = "EEUU", "China" = "China", "Reino Unido" = "Reino Unido", "Holanda"="Holanda", "Alemania"="Alemania","Francia"="Alemania", "Japón"="Alemania","Australia"="Australia","India"="India","Canadá"="Canadá","Rusia"="Rusia","Brasil"="Brasil","México"="México"),  multiple=TRUE,selectize=TRUE)),
+    
+  
+  
+  column(4,
+         hr(),
+  sliderInput("slider1", label = h4("Número de tweets"), min = 10, 
+    max = 100, value = 50))
+    
+),
+
+titlePanel("Resultados del análisis"),
+fluidRow(
+  column(4,
+
+verbatimTextOutput("accion"),
+verbatimTextOutput("pais"),
+verbatimTextOutput("tweets"))
+))
+
+
+renderPlot({
+  plot(category_senti$category_senti, xlab = "Sentimiento", main = "Sentimiento del mercado",ylab="cantidad de tweets",col = c("red", "white", "green"))
+})
+```
+
+
+
+

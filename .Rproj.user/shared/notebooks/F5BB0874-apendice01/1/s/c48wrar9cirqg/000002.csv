@@ -1,0 +1,7 @@
+"0","library(tidyverse)"
+"0","library(knitr)"
+"0","library(kableExtra)"
+"0","df <- read.csv('hitos.csv', header= TRUE, sep= "";"")"
+"0","kable(df,  align=""cclc"",format =""latex"", longtable=T,booktabs = TRUE, caption=""Estatus de instituciones culturales, 1818-2017"")%>%"
+"0","kable_styling(latex_options = c(""scale_down"",""HOLD_position"",""repeat_header""),repeat_header_text = ""(cont.)"")"
+"2","Longtable cannot be resized."

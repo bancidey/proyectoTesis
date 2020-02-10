@@ -1,0 +1,211 @@
+---
+documentclass: book
+classoption: a4paper
+#classoption: a4paper,oneside
+#bibliography: bib/library.bib
+bibliography: ["bib/library.bib", "bib/paquetes.bib"]
+#csl: methods-in-ecology-and-evolution.csl
+csl: acm-sig-proceedings-long-author-list.csl
+urlcolor: blue #black
+linkcolor: blue #black
+link-citations: yes
+fontsize: 12pt # 10pt,11pt
+geometry: margin = 2.5cm #1.2in
+output: 
+  pdf_document: 
+    keep_tex: no
+    number_sections: yes
+#    toc: yes
+    fig_caption: yes
+    includes:
+      in_header: latex/latex_preambulo.tex
+      after_body: latex/latex_antes_enddoc.tex
+---
+
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.path = 'figurasR/',
+                      echo = FALSE, warning = FALSE, message = FALSE,
+                      fig.pos="H",fig.align="center",out.width="95%",
+                      cache=FALSE)
+
+```
+
+
+<!-- \setcounter{chapter}{2} -->
+<!-- \setcounter{chapter}{2} escribir 2 para capítulo 3  -->
+<!-- \pagenumbering{arabic} -->
+
+\fancyhead[LE,RO]{\scriptsize\rightmark}
+\fancyfoot[LO,RE]{\scriptsize\slshape \leftmark}
+\fancyfoot[C]{}
+\fancyfoot[LE,RO]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+# Metodología
+
+
+## Modelos Generales Lineales Multinivel
+
+Los MGLM consideran un conjunto de datos jerárquicos consistentes de sujetos anidados dentro de grupos, con una variable de respuesta medida al nivel más bajo y variables explicativas en todos los niveles existentes. Es útil visualizar un MGLM como un sistema jerárquico de ecuaciones de regresión. Una forma general de presentar los modelos corresponde a Lee et al [@Lee_Rönnegård; @Lee_Double_2018] quien presenta los doble MGLM, siglas en inglés de “double hierarchical generalized linear models”, con la siguiente estructura (los superíndices indican a qué parte del modelo pertenece la matriz de diseño o parámetro):
+
+1. Efectos aleatorios para la media $\mu$ proporcionando modelado de covarianza y variación extra-Poisson ; o extra-binomial .
+
+2. Los efectos aleatorios para $\phi$, por ejemplo , ofreciendo una distribución de cola pesada para la varianza residual para dar un análisis robusto contra valores atípicos o contaminaciones de datos.
+
+3. Efectos aleatorios para $\lambda$, por ejemplo v_i^((u) )=N(0,$\lambda$), suministrando distribuciones de cola pesada para los efectos aleatorios a fin de proporcionar un análisis robusto contra las especificaciones erróneas de los supuestos de distribución sobre los efectos aleatorios. Además, algunos supuestos de distribución proporcionan una selección de variables.
+
+A continuación se desarrollará, sin pérdida de generalidad, un sistema simplificado de dos niveles extensible a otros, similar al de Hox *et al* [-@Hox, pp. 8-13). Se modela la asistencia a los eventos culturales en función de varias variables. En el nivel 2 hay J entidades federales (J= 1,2,..24 estados) con n_j municipios en cada uno de ellos. La variable dependiente es asistencia a eventos culturales en el nivel 1, es decir en el municipio (Y), la cual es una variable que toma valores numéricos iguales o mayores a cero. Para simplificar, se la hace depender de dos variables explicativas en el nivel 1: si el municipio tiene Presencia sedes culturales X1 (X1: Sin sedes=0, Con sedes=1) y la cantidad de actividades realizadas en el año X_2, la cual toma valores numéricos mayores o iguales a cero; y una variable explicativa en el nivel 2 de los estados: el nivel de desarrollo socioeconómico del estado Z, el cual de acuerdo al trabajo de Siso Lucena y Mac-Quhae [-@Lucena] toma cinco valores de 1-5. Hay datos correspondientes a i=1,2,…335 municipios en j=1,2, 3…24 estados. Se escriben ecuaciones de regresión separadas para cada estado:
+
+
+
+Usando etiquetas de variables en lugar de símbolos algebraicos, la ecuación es la siguiente:
+
+Donde: 
+
+El siguiente esquema muestra la interacción entre el nivel 2 y el nivel 1:
+
+Los coeficientes de intercepto y pendiente son los coeficientes aleatorios. Su variación no debe ser totalmente aleatoria, por lo que se puede explicar parte de la variación vía la introducción de variables de un nivel superior. Generalmente se explica solo parte de las variaciones, por lo que se espera que permanezca alguna variación residual inexplicable. 
+
+Los coeficientes de intercepto y de pendiente son una característica de estado, uno con un intercepto alto tendrá más asistencia que otro con un valor bajo. Hay una variable *dummy* para la *Presencia de sedes*, el valor de la intercepción reflejará el valor predicho para aquellas sin sedes. Las distintas intercepciones desplazan el valor medio de todo el estado, tanto de los *Sin sedes* como *Con Sedes*. Las diferencias en el coeficiente de pendiente para la *presencia de sedes* o la *cantidad de actividades realizadas*, indican que la relación entre estas predictoras y la asistencia predicha no será la misma en todos los estados. La figura presenta un ejemplo con dos grupos:
+
+
+
+
+A la izquierda aparecen 2 grupos sin variación de pendiente, y como resultado las dos pendientes son paralelas. Las intercepciones para ambos grupos son diferentes, el de la derecha muestra dos grupos con diferentes pendientes. La variación en las pendientes también tiene un efecto en la diferencia entre las intercepciones.  En todas los estados, los coeficientes de regresión $\beta$_0j  .... $\beta$_2j, tienen una distribución de la familia exponencial. El siguiente paso es explicar la variación de los coeficientes de regresión $\beta$_0j  .... $\beta$_2j, introduciendo variables explicativas en la variable al nivel de estado, para el intercepto.
+
+Y para las pendientes:
+
+La ecuación 4 predice la *asistencia media* en un estado (el intercepto $\beta$_oj) según el *nivel de desarrollo socioeconómico del estado (Z)*. Por lo tanto, si $\gamma$_01 es positiva, la asistencia media es mayor en los estados con mayor nivel de desarrollo socioeconómico. Por el contrario, si $\gamma$_01  es negativo, la *asistencia media* es menor en los estados con mayor nivel de desarrollo socioeconómico. La ecuación 5 establece que la relación, expresada por el coeficiente de la pendiente $\beta$_1j, entre la *asistencia* (Y) y la *Presencia sedes culturales* (X) en el municipio, depende del *nivel de desarrollo socioeconómico del estado* (Z). Si $\gamma$_11 es positivo, el efecto de *Presencia sedes culturales* en la *asistencia* es más grande con estados con mayor *nivel de desarrollo socioeconómico*. Por el contrario, si $\gamma$_11 es negativo, el efecto de *Presencia sedes culturales* en la *asistencia* es más pequeño con estados con mayor *nivel de desarrollo socioeconómico*. La ecuación 6 establece que si $\gamma$_21 es positivo, entonces el efecto de la *cantidad de actividades* realizadas en el municipio es mayor en estados más desarrollados socioeconómicamente. El *nivel de desarrollo socioeconómico del estado* actúa como variable moderadora de la relación entre *asistencia* y *Presencia sedes culturales* o *cantidad de actividades realizadas en el municipio*.
+
+
+Los términos u, es decir u_0j, u_1j y u_2j son términos de error residual al nivel de estado. Los errores residuales tienen media cero y son independientes de los errores residuales $\epsilon$_ij al nivel de los municipios.  La varianza de los errores residuales  u_0j es especificada como $\sigma$_(u_0)^2 y la varianza de los errores residuales u_1j y u_2j son especificadas como $\sigma$_1^2 y $\sigma$_(u_2)^2. Las *covarianzas* entre los términos de los errores residuales son denotadas por $\sigma$_(u_01 ), $\sigma$_(u_02 )y $\sigma$_(u_12 ), las cuales generalmente se suponen distintas de cero.
+
+Los coeficientes de regresión $\gamma$ no varían entre los estados, por lo cual carecen del subscrito j, y por aplicarse a los estados, se denominan *coeficientes fijos* del modelo. Toda la variación entre estados que queda en los coeficientes de $\beta$, después de predecirlos con la variable de estado Zj, se supone que es una variación del error residual. Esta es capturada por los términos de error residual u_j los cuales sí llevan el subscrito j para indicar el estado al que pertenecen.
+
+El modelo con dos variables explicativas a nivel de municipio y una a nivel de estado puede ser escrito como una ecuación compleja de regresión sustituyendo las ecuaciones 5 y 6 en la ecuación 4 obteniéndose:
+
+
+Usando etiquetas de variables en lugar de símbolos algebraicos, se obtiene:
+
+El segmento [$\gamma$_00+$\gamma$_10 X_1ij+$\gamma$_20 X_2ij+$\gamma$_01 Z_j+$\gamma$_11 X_1ij Z_j+$\gamma$_21 X_2ij Z_j ] contiene los coeficientes fijos siendo la parte *fija o determinista* del modelo. La restante con los errores aleatorios es la parte *aleatoria o estocástica* del modelo. Los términos X_1ij Z_j y X_2ij Z_j son de interacción y aparecen como consecuencia de modelar $\beta$_1j de una variable del municipio X_ij con la variable de estado Z. Así, el efecto moderador de Z sobre la relación entre la variable dependiente Y y el predictor X, se expresa en la versión de ecuación simple del modelo como una interacción entre niveles. La interpretación de los términos de interacción en el análisis de regresión múltiple es compleja, pero lo relevante a tener en cuenta es que la interpretación sustantiva de los coeficientes en modelos con interacciones es mucho más simple si las variables que configuran la interacción se expresan como desviaciones de sus respectivas medias.
+
+En el análisis de regresión múltiple los coeficientes de regresión se estandarizan a menudo porque se facilita la interpretación cuando se desea comparar los efectos de diferentes variables dentro de una muestra. Pero si el objetivo es comparar las estimaciones de los parámetros de diferentes muestras entre sí, se deben utilizar coeficientes no estandarizados. Para estandarizar lo mejor es derivar los coeficientes de la regresión estandarizada  a partir de los coeficientes no estandarizados. Si existe una parte aleatoria complicada, que incluye componentes aleatorios para pendientes de regresión, se debería pensar cuidadosamente acerca de la escala de las variables explicativas.
+
+
+
+## Selección de variables
+
+La selección de variables busca un modelo que se ajuste bien a los datos y que a la vez sea posible buscar un equilibrio entre bondad de ajuste y sencillez. Puede verse como un problema de regularización que asegure la *ortogonalidad* de las variables, para ello se siguen los pasos siguientes:
+
+1. Visualización y cálculo de correlación y asociación entre las posibles variables predictoras, a los fines de identificar *colinealidad* o asociación entre alguna de ellas, y eliminar las redundantes.
+
+2. Uso de *métodos de aprendizaje* no supervisado que permitan identificar las predictoras con mayor fuerza explicativa o una combinación lineal de las mismas, por ejemplo vía un *Análisis de Componentes Principales* o ACP o un Análisis de Correspondencia para variables categóricas.
+
+3. Uso de métodos *por paso (stepwise)* como *Eliminación hacia Atrás (Backward elimination)*, *Eliminación hacia Adelante (Forward selection)*, *Selección Paso a Paso (Stepwise selection)* y *Selección del mejor subconjunto*. 
+
+La estimación penalizada proporcionará estimaciones con cierta reducción, y puede utilizarse con poco esfuerzo adicional con procedimientos comunes. Al aplicarlo al modelo lineal estándar, donde se estima el valor de b que minimiza la pérdida del error cuadrático.
+
+En pocas palabras, buscamos coeficientes que minimizan la suma de los residuos cuadráticos. Sólo se añade una componente de penalización al procedimiento:
+
+
+
+$\lambda$ es el término de penalización para el cual valores mayores resultarán en una mayor reducción. Se aplica a la norma *L1* o *Manhattan* de los coeficientes, $\beta_{1}$, $\beta_{2}$... $\beta_{p}$, es decir, sin incluir la intercepción $\beta_{0}$, y es la suma de sus valores absolutos, comúnmente denominado *lasso o least absolute shrinkage and selection operator*, por sus siglas en inglés. Para los modelos lineales y aditivos generalizados, se puede expresar conceptualmente una verosimilitud penalizada así:
+
+
+
+Como se está maximizando la verosimilitud, la penalización es una resta, pero no se muestra nada inherentemente diferente. Esta idea básica de añadir un término de penalización se aplicará a todos los enfoques de aprendizaje automático, pero como se muestra, es posible aplicar esta herramienta a los métodos clásicos para mejorar el rendimiento de las predicciones. Se puede proceder a la regularización de diferentes maneras. Por ejemplo, usando la norma cuadrada L2 resulta en lo que se llama regresión de ridge o cresta (también conocida como regularización Tikhonov), y usando una combinación ponderada de las penalizaciones de lasso y cresta nos da una regularización de red elástica.
+
+
+
+## Paquetes de R para Modelos Multinivel
+
+Existen diversas opciones para el manejo de modelos multinivel pero R los aventaja por su carácter de software libre y gratuito, la permanente actualización de su comunidad de usuarios y en ser de hecho el estándar en el mundo académico. Field *et al* [-@Field] señala varios paquetes que se pueden utilizar: nlme [@Pinheiro] y lme4 [@Bates]. El paquete nlme permite modelar la estructura de covarianza. Lee, Rönnegård, & Noh [@Lee_Rönnegård] presentan los paquetes HGML (hierarchical generalized linear models) y Doble HGML o DHGML [@Lee_Double_2018]. El paquete dhglm incluye varias clases de modelos incluyendo: modelos lineales generalizados (MLGe), MLGe conjuntos, MLGe con efectos aleatorios (conocidos como HGLMs) y HGLMs incluyendo modelos para los parámetros de dispersión, incluyendo HGLMs dobles (DHGLMs) introducidos posteriormente. 
+
+
+Para el desarrollo de la investigación se ensayará con los paquetes disponibles, pero al final se elegirá uno solo para la presentación de los resultados, de acuerdo a la facilidad de uso para los eventuales operadores de la institucionalidad cultural.
+
+
+
+## Operacionalización del indicador
+
+
+A continuación se detalla la operacionalización del indicador o variable dependiente del modelo:
+
+
+
+**Variable dependiente**
+
+
+*Asistencia*: Mide los niveles de participación de la población en eventos municipales culturales, como exposiciones, ferias, talleres, exposiciones en museos, visitas a bibliotecas, sitios históricos-culturales, entre otros, como asistentes en calidad de público o consumidores los bienes y servicios culturales ofrecidos en el año 2018. La información es recopilada a través de los entes institucionales regionales de la cultura. La unidad de análisis es el municipio como primer nivel y el estado como segundo nivel.
+
+
+
+**Variables independientes**
+
+
+Por su parte las variables independientes se extraen de los diversos registros de datos disponibles en los entes oficiales a cargo de la cultura y entes relacionados con el presupuesto y finanzas públicas, estadísticas nacionales, turismo y división político administrativa del país. Algunas de estas variables ya han sido analizadas en investigaciones preliminares. Siguiendo las orientaciones de la UNESCO y su adaptación al caso venezolano, se agrupan por las siguientes dimensiones:
+
+
+*Sociales*
+
+*	Educación: Población escolarizada/ Niveles de alfabetización por estado
+
+* Pobreza: Indicador de niveles de pobreza por municipios.
+
+
+*Económico-Financiero*
+
+* Actividad Económica por Entidad Federal: establecimientos económicos por estados según último censo industrial de 2012.
+
+* Presupuesto de Municipios: Total y Sector 09 Cultura y Comunicación, por cada año y total acumulado en el período 2008-2018.
+
+*Presupuesto de Entidades Federales proyectado a los municipios de acuerdo a su población: Total y Sector 09 Cultura y Comunicación, por cada año y total acumulado en el período 2008-2018.
+
+*PIB total y pér cápita correlacionado con la creación de Sedes de Sedes Culturales.
+
+
+*Infraestructural cultural*
+
+* Sedes culturales en 2018 discriminadas por Estado, Municipio, Parroquia, Poblado o Ciudad, ente, tipo de sede, cantidad de trabajadores, beneficiarios, naturaleza de la propiedad, año de fundación, Área Cultural y Plataforma Cultural de adscripción.
+
+* Espacios de la Misión Cultura en 2018 por Estado, Municipio, Parroquia, Poblado o Ciudad, Tipo de Sede, cantidad de animadores, tutores y beneficiarios, año de fundación, Área Cultural y Plataforma Cultural de adscripción.
+
+
+*Turismo*
+
+* Afluencia turística por Entidad Federal en el período 2015-2018.
+
+
+*Actividad Cultural*
+
+* Actividades de Gabinetes Culturales por fecha, ubicación, beneficiarios, área y Plataforma Cultural.
+
+* Cultores: Todo aquel dedicado a determinada actividad cultural de manera permanente  y que se considere a sí mismo como: Cultor o Cultora, Artista, Intelectual, Artesano o Artesana. Incluye a las personas dedicadas a la promoción y difusión cultural.
+
+
+*Geografía*
+
+* Extensión territorial de Estados y Municipios
+
+*Población de Estados, Municipios y Parroquias proyectada quinquenalmente de 2000 a 2050.
+
+
+*Organización*
+
+* Plataformas Culturales, Entes adscritos y Gabinetes Culturales Territoriales
+* Personal por entes y jerarquía.
+
+
+*Política Cultural*
+
+* Descripción de las Actividades de Gabinetes en  2018.
+
+* Parroquias priorizadas.
+
+* La cultura en Plan de la Patria 2013-2019.
+
+

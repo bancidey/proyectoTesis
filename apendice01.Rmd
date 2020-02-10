@@ -1,0 +1,279 @@
+---
+documentclass: book
+classoption: a4paper
+#lang: es
+#bibliography: bib/library.bib
+bibliography: ["bib/library.bib", "bib/paquetes.bib"]
+csl: apa.csl
+urlcolor: blue #black
+linkcolor: blue #black
+link-citations: yes
+fontsize: 12pt # 10pt,11pt
+geometry: margin = 2.5cm #1.2in
+output: 
+  pdf_document: 
+    keep_tex: no
+    number_sections: yes
+#    toc: yes
+    fig_caption: yes
+    includes:
+      in_header: latex/latex_preambulo.tex
+      after_body: latex/latex_antes_enddoc.tex
+---
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE    ,fig.path = 'figurasR/',
+                      echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.pos="H",fig.align="center",out.width="95%",
+                      cache=FALSE)
+
+```
+
+
+<!-- \appendix -->
+<!-- \setcounter{chapter}{0} -->
+<!-- \setcounter{chapter}{0} escribir 0 para apéndice A  -->
+
+<!-- \pagenumbering{arabic} -->
+
+\fancyhead[LE,RO]{\scriptsize\rightmark}
+\fancyfoot[LO,RE]{\scriptsize\slshape \leftmark}
+\fancyfoot[C]{}
+\fancyfoot[LE,RO]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+# Línea de tiempo de la cultura institucional
+
+A continuación se presentan los pasos para la derivación de la línea de tiempo de la institucionalidad cultural presentada en el Capítulo 1. El procedimiento descrito corresponde al post elaborado por Keen [-@Keen2018].
+
+## Librerías
+
+Se suben las librerías
+
+```{r librerias}
+library(ggplot2)
+library(scales)
+library(lubridate) # Opera con fechas y sus formatos
+library(ggrepel) #Evita la superposición de textos en los gráficos
+library(formatR) # Arregla los códigos r muy largos
+library(knitr)
+library(kableExtra)
+```
+
+## Datos
+
+Los datos se obtienen principalmente de la memoria del MPPC [@MemoriaMPPC2014] y otros de las páginas web de las instituciones o de medios informativos. La lista no pretende ser exahustiva sino representar el patrón de emergencia de las instituciones a lo largo del período. Las fechas para las cuales solo pudieron hallarse los años de creación, se completaron arbitrariamente colocándolas el día 30 del mes de junio del año respectivo de fundación. Para determinar las fechas de fundación, se prioriza la primera vez que se creó o inauguró el ente, independientemente de la naturaleza jurídica del mismo o de los cambios en su denominación. En los demás casos se toma la fecha de la Gaceta Oficial que los creó. La tabla siguiente muestra las instituciones con sus fechas de creación y las fuentes bibliográficas de dónde se obtuvo la información:
+
+### Instituciones culturales \label{tab:Hitofuente}
+
+| **Denominación**| **Fecha**| **Fuente** |
+|:----------------|:------------:|:-------|
+| Correo del Orinoco                                              | 27/06/1818 | [@Correo1818]               |
+| Universidad Central de Venezuela                                | 24/06/1827 | [@UCV1827]                   |
+| Universidad de Los Andes                                        | 14/01/1832 | [@Lopez2009]                 |
+| Biblioteca Nacional                                             | 13/07/1833 | [@himiob2008historia]        |
+| Archivo General de la Nación                                    | 24/05/1836 | [@AGV1836]                   |
+| Teatro Puerto Cabello                                           | 01/01/1866 | [@TPtoCabello1886]           |
+| Gaceta Oficial                                                  | 11/10/1872 | [@Gaceta1872]                |
+| Museo de Bellas Artes y Ciencias Naturales                      | 28/10/1875 | [@MuseoNac1875]              |
+| Teatro Baralt en Maracaibo                                      | 28/07/1877 | [@TBaralt1877]               |
+| Teatro Municipal de Caracas                                     | 01/01/1886 | [@Tmunicipal1881]            |
+| Academia Nacional de Bellas Artes                               | 16/09/1887 | [@abarca2018academia]        |
+| La Universidad del Zulia                                        | 29/05/1891 | [@Lopez2009]                 |
+| Universidad de Carabobo                                         | 15/11/1892 | [@Lopez2009]                 |
+| Teatro Valencia                                                 | 31/10/1894 | [@TValencia1894]             |
+| Teatro Nacional                                                 | 11/06/1905 | [@TNacional905]              |
+| Protección Patrimonial, Ministerio del Interior                 | 30/06/1917 | [@pacheco2018proteccion]     |
+| Orquesta Sinfónica                                              | 24/06/1930 | [@Orquesta1930]              |
+| Dirección de Cultura y Bellas Artes, Ministerio de Educación    | 30/06/1936 | [@massiani1977consejo,35]    |
+| Radio Nacional de Venezuela                                     | 29/07/1936 | [@RNV1936]                   |
+| Dirección de Culutra y Bienestar Social, Ministerio del Trabajo | 30/06/1940 | [@massiani1977consejo,35]    |
+| Escuela Nacional de Ballet                                      | 30/06/1947 | [@Ballet1947]                |
+| Televisora Nacional                                             | 22/11/1952 | [@mosquera2010television,49] |
+| Instituto Nacional de Cultura y Bellas Artes                    | 09/03/1960 | [@massiani1977consejo,35]    |
+| Venezolana de Televisión                                        | 01/08/1964 | [@VTV1964]                   |
+| Cinemateca Nacional                                             | 04/05/1966 | [@abreu2016cincuenta,175]    |
+| Centro Nacional del Libro                                       | 21/04/1967 | [@MemoriaMPPC2014,50]        |
+| Monte Ávila                                                     | 08/04/1968 | [@MemoriaMPPC2014,353]       |
+| Conservatorio Juan José Landaeta                                | 30/06/1971 | [@ConservJJL1971,347]        |
+| Teatro Teresa Carreño                                           | 11/06/1973 | [@MemoriaMPPC2014,397]       |
+| Casa Bello                                                      | 28/11/1973 | [@MemoriaMPPC2014,121]       |
+| Poliedro de Caracas                                             | 26/03/1974 | [@Poliedro1974]              |
+| Centro de Estudos Latinoamericanos Rómulo Gallegos              | 30/07/1974 | [@MemoriaMPPC2014,130]       |
+| Biblioteca Ayacucho                                             | 10/09/1974 | [@MemoriaMPPC2014,88]        |
+| Fundación Musical Simón Bolívar                                 | 12/02/1975 | [@FundacionSB1975]           |
+| Conservatorio Simón Bolívar                                     | 30/06/1975 | [@ConservaSB1975]            |
+| Consejo Nacional de Cultura                                     | 29/08/1975 | [@massiani1977consejo,36]    |
+| Galería de Arte Nacional                                        | 06/04/1976 | [@GAN1976]                   |
+| Liberarías del Sur                                              | 30/12/1982 | [@MemoriaMPPC2014,230]       |
+| Compañía Nacional de Teatro                                     | 22/05/1984 | [@MemoriaMPPC2014,74]        |
+| Casa del Artista                                                | 25/03/1987 | [@MemoriaMPPC2014,110]       |
+| Compañía Nacional de Música                                     | 27/07/1987 | [@MemoriaMPPC2014,187]       |
+| Centro de la Diversidad Cultural                                | 13/09/1990 | [@MemoriaMPPC2014,141]       |
+| Instituto del Patrimonio Cultural                               | 03/09/1993 | [@MemoriaMPPC2014,343]       |
+| Centro Nacional Autonomo de Cinematografia                      | 08/09/1993 | [@MemoriaMPPC2014,38]        |
+| Centro Nacional de Fotografía                                   | 20/12/2001 | [@MemoriaMPPC2014,161]       |
+| Red de Intelectuales y Artistas en Defensa de la Humanidad      | 06/12/2004 | [@Red2004]                   |
+| Ministerio de Cultura                                           | 09/02/2005 | [@MemoriaMPPC2014,3]         |
+| Museos Nacionales                                               | 12/04/2005 | [@MemoriaMPPC2014,258]       |
+| Instituto de las Artes de la Imagen y el Espacio                | 08/07/2005 | [@MemoriaMPPC2014,328]       |
+| Compañía Nacional de Danza                                      | 06/02/2006 | [@MemoriaMPPC2014,179]       |
+| Fundación Distribuidora Venezolana de la Cultura                | 06/02/2006 | [@MemoriaMPPC2014,199]       |
+| Editorial El Perro y la Rana                                    | 06/02/2006 | [@MemoriaMPPC2014,211]       |
+| Fundación Villa del Cine                                        | 06/02/2006 | [@VillaCine2006]             |
+| Amazonia Films                                                  | 06/02/2006 | [@Amazonia2006]              |
+| Red de Arte                                                     | 08/05/2006 | [@MemoriaMPPC2014,281]       |
+| Instituto de las Artes Escenicas y Musicales                    | 08/07/2006 | [@MemoriaMPPC2014,336]       |
+| Centro Nacional del Disco                                       | 18/12/2006 | [@MemoriaMPPC2014,170]       |
+| Fundación Imprenta de la Cultura                                | 18/12/2006 | [@MemoriaMPPC2014,221]       |
+| Centro Nacional de Historia                                     | 17/10/2007 | [@MemoriaMPPC2014,453]       |
+| Alba Ciudad                                                     | 01/01/2008 | [@Alba2008]                  |
+| Universidad Nacional Experimental de las Artes                  | 06/05/2008 | [@Unearte2008]               |
+| Ministerio del Poder Popular para la Cultura                    | 14/10/2008 | [@MemoriaMPPC2014,3]         |
+| Correo del Orinoco                                              | 30/08/2009 | [@Correo2009]                |
+| Complejo Editorial Alfredo Maneiro                              | 16/05/2013 | [@Ceam2013]                  |
+| Movimiento Teatral César Rengifo                                | 30/10/2013 | [@CesarR2013]                |
+| Corazón Llanero                                                 | 02/08/2016 | [@CorazonLlaneroo2016]       |
+| Corazón Salsero                                                 | 08/02/2017 | [@CorazonSalsero2017]        |
+| Corazón Urbano                                                  | 10/04/2017 | [@CorazonUrbano]             |
+| La Casona Cultural Aquiles Nazoa                                | 13/12/2019 |[@Casona2019]                  |
+De los datos anteriores se separan los años y meses, y para mejorar la legibilidad se abrevian las denominaciones:
+
+```{r datos, echo=TRUE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+df <- read.csv('hitos.csv', header= TRUE, sep= ";")
+kable(df,  align="cclc",format ="latex", longtable=T,booktabs = TRUE, caption="Estatus de instituciones culturales, 1818-2019")%>%
+kable_styling(latex_options = c("scale_down","HOLD_position","repeat_header"),repeat_header_text = "(cont.)")
+```
+
+
+## Preparación 
+
+Lo primero es definir una fecha para cada una de estas filas como el día 1 del mes.
+
+
+
+```{r DefineFecha}
+df$date <- with(df, ymd(sprintf('%04d%02d%02d', year, month, 1)))
+df <- df[with(df, order(date)), ]
+head(df)
+```
+A continuación se convierte el estado (status) en una variable categórica ordinal, en orden de criticidad que va de "Existente" a "Cerrada". También se definen algunos valores de color hexadecimales para asociarlos a estos estados.
+
+```{r estatus}
+status_levels <- c("Existente", "Renovada", "Nueva Etapa", "Cerrada")
+status_colors <- c("#0070C0", "#00B050", "#FFC000", "#C00000")
+
+df$status <- factor(df$status, levels=status_levels, ordered=TRUE)
+```
+
+En la línea de tiempo, se quiere variar la altura y la dirección de las líneas, porque de lo contrario el texto de los hitos chocará. Se necesita asignar las líneas y las alturas para que los hitos del mismo mes sean los mismos, por lo que sólo se cambian los valores de altura y posición.
+
+A continuación, se ordena los datos por fecha y estado, de modo que el estado "cerrado"" se traza en último lugar y los colores que se muestran son para el estado de los hitos cerrados.
+
+```{r orden}
+positions <- c(0.5, -0.5, 1.0, -1.0, 1.5, -1.5)
+directions <- c(1, -1)
+
+line_pos <- data.frame(
+    "date"=unique(df$date),
+    "position"=rep(positions, length.out=length(unique(df$date))),
+    "direction"=rep(directions, length.out=length(unique(df$date)))
+)
+
+df <- merge(x=df, y=line_pos, by="date", all = TRUE)
+df <- df[with(df, order(date, status)), ]
+
+head(df)
+```
+
+Si hay múltiples hitos para un mes determinado, se necesita alterar ligeramente sus posiciones (ligeramente más alto si está por encima de la línea de tiempo y ligeramente más bajo si está por debajo).
+
+Se puede hacer un recuento acumulativo de fechas individuales para comprobar si se tienen múltiples hitos para un mes determinado.
+
+
+```{r reposicion}
+text_offset <- 0.05
+
+df$month_count <- ave(df$date==df$date, df$date, FUN=cumsum)
+df$text_position <- (df$month_count * text_offset * df$direction) + df$position
+head(df)
+```
+Como se quiere mostrar todos los meses en las líneas de tiempo, no sólo los meses para los que hay eventos, se crea un dataframe que contenga todos los meses.
+
+Se empieza 2 meses antes del primer hito y se termina 2 meses después del último hito para tener un poco de memoria intermedia.
+
+```{r MemoriaIntermedia, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+month_buffer <- 2
+
+month_date_range <- seq(min(df$date) - months(month_buffer), max(df$date) + months(month_buffer), by='month')
+month_format <- format(month_date_range, '%b')
+month_df <- data.frame(month_date_range, month_format)
+```
+
+Se hace lo mismo para los años que también se quieren mostrar.
+
+Sólo se mostrarán los años para los que hay un cruce de diciembre/enero, esto es lo que está haciendo la línea de intersección (intersect).
+
+```{r interseccion}
+year_date_range <- seq(min(df$date) - months(month_buffer), max(df$date) + months(month_buffer), by='year')
+year_date_range <- as.Date(
+    intersect(
+        ceiling_date(year_date_range, unit="year"),
+        floor_date(year_date_range, unit="year")
+    ),  origin = "1818-01-01"
+)
+year_format <- format(year_date_range, '%Y')
+year_df <- data.frame(year_date_range, year_format)
+```
+
+
+## Generación del gráfico de línea de tiempo
+
+Ahora que se tienen los datos en un estado listo para ser trazados, se puede armar el gráfico, del cual debido a que los meses y años aparecen muy juntos, se optó por desaplicarlos. Igualmente se usó el paquete la función *geom_text_repel* del paquete *ggrepel* para evitar la superposición del texto de los hitos. Finalmente el gráfico se guarda como una imagen png para ser insertada en el Capítulo 1:
+
+```{r lineaTiempo}
+png(filename = "figurasR/hitos.png", width = 800, height = 600)
+timeline_plot<-ggplot(df,aes(x=date,y=0, col=status, label=milestone))
+timeline_plot<-timeline_plot+labs(col="Hitos")
+timeline_plot<-timeline_plot+scale_color_manual(values=status_colors, labels=status_levels, drop = FALSE)
+timeline_plot<-timeline_plot+theme_classic()
+
+# Trazar una línea negra horizontal para la línea de tiempo
+timeline_plot<-timeline_plot+geom_hline(yintercept=0, 
+                color = "black", size=0.3)
+
+# Trazar líneas de segmentos verticales para hitos
+timeline_plot<-timeline_plot+geom_segment(data=df[df$month_count == 1,], aes(y=position,yend=0,xend=date), color='black', size=0.2)
+
+# Trazar los puntos de dispersión en cero y la fecha
+timeline_plot<-timeline_plot+geom_point(aes(y=0), size=1)
+
+# No muestra los ejes, posiciona apropiadamente la leyenda
+timeline_plot<-timeline_plot+theme(axis.line.y=element_blank(),
+                 axis.text.y=element_blank(),
+                 axis.title.x=element_blank(),
+                 axis.title.y=element_blank(),
+                 axis.ticks.y=element_blank(),
+                 axis.text.x=element_blank(),
+                 axis.ticks.x =element_blank(),
+                 axis.line.x =element_blank(),
+                 legend.position = "bottom"
+                )
+
+# Mostrar el texto de cada mes
+#timeline_plot<-timeline_plot+geom_text(data=month_df, #aes(x=month_date_range,y=-0.1,label=month_format),size=2.5,vjust=0.5, #color='black', angle=90)
+# Mostrar el texto del año
+#timeline_plot<-timeline_plot+geom_text(data=year_df, #aes(x=year_date_range,y=-0.15,label=year_format, fontface="bold"),size=1.5, #color='black',vjust=0.5, angle=90)
+#Mostrar el texto de cada hito
+timeline_plot<-timeline_plot+geom_text_repel(aes(y=text_position,label=paste(milestone,year)),size=4.0,key_glyph = "point")
+print(timeline_plot)
+dev.off()
+print(timeline_plot)
+```
+

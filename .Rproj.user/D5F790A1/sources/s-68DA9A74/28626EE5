@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573677210549.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "28626EE5",
+    "lastKnownWriteTime" : 1573681018,
+    "last_content_update" : 1573681069586,
+    "path" : "~/tex_mining_market/Twitter.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "137,14",
+        "last_setup_crc32" : "68DA9A74bb338d19",
+        "scrollLine" : "135"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

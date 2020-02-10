@@ -1,0 +1,135 @@
+---
+documentclass: book
+classoption: a4paper
+#lang: es
+#bibliography: bib/library.bib
+bibliography: ["bib/library.bib", "bib/paquetes.bib"]
+csl: acm-sig-proceedings-long-author-list.csl
+urlcolor: blue #black
+linkcolor: blue #black
+link-citations: yes
+fontsize: 12pt # 10pt,11pt
+geometry: margin = 2.5cm #1.2in
+output: 
+  pdf_document: 
+    keep_tex: no
+    number_sections: yes
+#    toc: yes
+    fig_caption: yes
+    includes:
+      in_header: latex/latex_preambulo.tex
+      after_body: latex/latex_antes_enddoc.tex
+---
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.path = 'figurasR/',
+                      echo = FALSE, warning = FALSE, message = FALSE,
+                      fig.pos="H",fig.align="center",out.width="95%",
+                      cache=FALSE)
+
+```
+
+
+<!-- \appendix -->
+<!-- \setcounter{chapter}{0} -->
+<!-- \setcounter{chapter}{0} escribir 0 para apéndice A  -->
+
+<!-- \pagenumbering{arabic} -->
+
+\fancyhead[LE,RO]{\scriptsize\rightmark}
+\fancyfoot[LO,RE]{\scriptsize\slshape \leftmark}
+\fancyfoot[C]{}
+\fancyfoot[LE,RO]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+# Institucionalidad cultural
+
+
+## Entes del Poder Público Nacional
+
+Para determinar los entes con responsabilidad cultural se trabajó con la Ley de Presupuesto del año 2018 [@Presupuesto2018]. Los resultados incluyen más entes que los considerados por la clasificación del sector 09 utilizado por la Oficina Nacional de Presupuesto, ONAPRE, dado que se tomaron en cuenta como actividades culturales, las así consideradas por la UNESCO. La ONAPRE en 2016, último año en el cual se publicó la Exposición de Motivos, solo incluyó además del MPPC a la Asamblea Nacional; Tribunal Supremo de Justicia; y los MPP de Defensa; Educación; Comunicación e Información; Educación Universitaria, Ciencia y Tecnología y Despacho Presidencial.
+
+Es de notar que el MPPC, MINCI y MPP de Turismo, están asdscritos a la misma Vicepresidencia Sectorial. No existen otras instancias de coordinación con otros organismos del Poder Público Nacional. En cambio, a nivel regional sí existe integración con los Estados ya que desde 2004 existen los Gabinetes Regionales, iniciados como Coordinaciones Estadales , con variaciones importantes en los grados de integración con las Gobernaciones.
+
+
+### MPPC
+
+\begin{table}[H]
+\centering
+\caption{Plataformas del MPPC y entes adscritos en 2018}
+\label{tab:MPPC}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llr@{}}
+\toprule
+Entes / Organismos                                 & Plataforma                       & \multicolumn{1}{l}{Presupuesto} \\ \midrule
+MPPC                                               &                                  & 86.472.182.310                  \\
+Instituto Autónomo Biblioteca Nacional y de Servicios de Bibliotecas & Pensamiento Patrimonio y Memoria & 8.920.891.517 \\
+Instituto del Patrimonio Cultural                  & Pensamiento Patrimonio y Memoria & 1.408.797.842                   \\
+Compañía Nacional de Teatro                        & Artes Escénicas y Musicales      & 1.537.483.299                   \\
+Fundación Compañía Nacional de Música              & Artes Escénicas y Musicales      & 1.511.813.472                   \\
+Fundación Biblioteca Ayacucho                      & Libro y Lectura                  & 1.386.179.731                   \\
+Fundación Casa Nacional de las Letras Andrés Bello                   & Pensamiento Patrimonio y Memoria & 512.945.937   \\
+Fundación Teatro Teresa Carreño                    & Artes Escénicas y Musicales      & 5.988.670.739                   \\
+Fundación Centro de Estudios Latinoamericanos Rómulo Gallegos        & Pensamiento Patrimonio y Memoria & 1.120.188.726 \\
+Fundación Librerías del Sur                        & Libro y Lectura                  & 1.192.835.404                   \\
+Fundación Casa del Artista                         & Artes Escénicas y Musicales      & 2.124.310.731                   \\
+Centro de la Diversidad Cultural                   & Artes Escénicas y Musicales      & 2.032.533.168                   \\
+Fundación Cinemateca Nacional                      & Cine y Audiovisuales             & 1.434.648.175                   \\
+Fundación Centro Nacional de la Fotografía (CENAF) & Cine y Audiovisuales             & 746.591.566                     \\
+Fundación Museos Nacionales                        & Artes de la Imagen y el Espacio  & 5.402.441.571                   \\
+Fundación Distribuidora Venezolana de la Cultura   & Libro y Lectura                  & 617.048.181                     \\
+Fundación Compañía Nacional de Danza               & Artes Escénicas y Musicales      & 841.421.716                     \\
+Fundación Misión Cultura                           & Misión Cultura                   & 14.604.263.545                  \\
+Fundación Editorial El Perro y La Rana             & Libro y Lectura                  & 1.589.242.309                   \\
+Fundación Red de Arte                              & Artes de la Imagen y el Espacio  & 1.691.474.645                   \\
+Fundación Imprenta de la Cultura                   & Libro y Lectura                  & 1.613.024.377                   \\
+Fundación Centro Nacional del Disco (CENDIS)       & Artes Escénicas y Musicales      & 2.207.537.489                   \\
+Centro Nacional Autónomo de Cinematografía (CNAC)  & Cine y Audiovisuales             & 639.723.102                     \\
+Centro Nacional del Libro (CNL)                    & Libro y Lectura                  & 1.647.133.073                   \\
+Instituto de las Artes Escénicas y Musicales       & Artes Escénicas y Musicales      & 2.614.040.707                   \\
+Instituto de las Artes de la Imagen y el Espacio                     & Artes de la Imagen y el Espacio  & 1.245.389.356 \\
+Monteavila Editores Latinoamericana, C.A.          & Libro y Lectura                  & 1.519.920.960                   \\
+UNEARTE                                            & UNEARTE                          & 19.782.731.605                  \\
+Fondo del ALBA                                     & Artes Escénicas y Musicales      & 0                               \\
+Red de Intelectuales y Artistas en Defensa de la Humanidad           & Pensamiento Patrimonio y Memoria & 0             \\
+Archivo General de la Nación (incluído en Ppto de MPPC)              & Pensamiento Patrimonio y Memoria & 0             \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+
+
+### Otros entes nacionales
+
+Presupuesto total de otros entes a la cultura en 2018
+
+Monto: Bs. 471.196.443.944
+
+
+```{r EntesCult, echo=FALSE, caption=TRUE}
+library(kableExtra)
+Entes_C<-read.csv("Entes culturales.csv",header = TRUE,sep = ";",check.names = F)
+kable(Entes_C, format ="latex", booktabs = TRUE, caption="Otros Entes del Poder Público Nacional en 2018", align='llr')%>%
+kable_styling(latex_options = c("scale_down","HOLD_position"))%>%
+column_spec(1, width = "10em")
+```
+
+
+## Entes del Poder Público Estadal y Municipal
+
+Las actividades culturales del Poder Público Estadal son dirigidas por las respectivas Secretarías de Cultura de las Gobernaciones y los eventuales entes adscritos culturales. En el caso del Gobierno del Distrito Capital, por pertenecer al Poder Ejecutivo Nacional sus datos se incluyeron en la sección anterior.
+
+En el caso de los municipios, las actividades culturales competen básicamente a entes especializados de la Alcaldía como las Direcciones de Cultura. Así por ejemplo en el Municipio Chacao del Estado Miranda es ejercida por Cultura Chacao, al cual se deben añadir entes como la Fundación Orquesta Sinfónica Juvenil y la Fundación Centro Cultural Chacao. Adicionalmente todos los municipios cuentan con el *Cronista del Municipio*, responsable por el Patrimonio Histórico.
+
+## Áreas culturales por plataformas
+
+Para efectos de la calificación de las actividades realizadas durante el año 2018, el MPPC utilizó la siguiente tabla de clasificación de áreas culturales por plataformas:
+
+```{r Plataformas, echo=FALSE,fig.cap='Distribución de áreas culturales por plataformas', fig.pos="H", fig.align="center", out.width = '75%',warning=FALSE}
+library(png)
+knitr::include_graphics("figurasR/Plataformas-1",auto_pdf = TRUE )
+```
+

@@ -1,0 +1,30 @@
+"0","library(ggplot2)"
+"0","library(scales)"
+"2","
+Attaching package: ‘scales’
+
+"
+"2","The following object is masked from ‘package:purrr’:
+
+    discard
+
+"
+"2","The following object is masked from ‘package:readr’:
+
+    col_factor
+
+"
+"0","library(lubridate) # Opera con fechas y sus formatos"
+"2","
+Attaching package: ‘lubridate’
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    date
+
+"
+"0","library(ggrepel) #Evita la superposición de textos en los gráficos"
+"0","library(formatR) # Arregla los códigos r muy largos"
+"0","library(knitr)"
+"0","library(kableExtra)"

@@ -1,0 +1,3 @@
+"0","df$date <- with(df, ymd(sprintf('%04d%02d%02d', year, month, 1)))"
+"0","df <- df[with(df, order(date)), ]"
+"0","head(df)"

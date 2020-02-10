@@ -1,0 +1,4 @@
+"0","status_levels <- c(""Existente"", ""Renovada"", ""Nueva Etapa"", ""Cerrada"")"
+"0","status_colors <- c(""#0070C0"", ""#00B050"", ""#FFC000"", ""#C00000"")"
+"0",""
+"0","df$status <- factor(df$status, levels=status_levels, ordered=TRUE)"

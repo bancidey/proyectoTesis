@@ -1,0 +1,5 @@
+"0","Cultura_estados_esc<-scale(Cultura_estados)"
+"0","boxplot(Cultura_estados_esc,xlab=""Años"","
+"0","ylab=""Presupuesto escalado"","
+"0","main=""Presupuesto Cultural Estadal 2008-2018 escalado"","
+"0","cex.lab=0.8,cex.axis=0.6,cex.main=0.9)"

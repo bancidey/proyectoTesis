@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580734451838.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "598933552",
+    "id" : "324D7366",
+    "lastKnownWriteTime" : 1580734647,
+    "last_content_update" : -2147483648,
+    "path" : "~/MemoriaTFE/apendice02.Rmd",
+    "project_path" : "apendice02.Rmd",
+    "properties" : {
+        "cursorPosition" : "54,355",
+        "scrollLine" : "53"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

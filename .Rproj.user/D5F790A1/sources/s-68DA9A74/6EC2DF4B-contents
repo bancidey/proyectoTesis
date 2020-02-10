@@ -1,0 +1,395 @@
+---
+title: "Modelo Multinivel de la Cultura Institucional en Venezuela"
+lang: es-419
+author: "Bernardo Ancidey"
+date: '\today'
+geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
+documentclass: report
+output:
+  bookdown::pdf_document2:
+    highlight: pygments
+    fig_caption: yes
+    number_sections: no
+    toc: true
+    toc_depth: 6
+    citation_package: biblatex
+  html_document:
+    df_print: paged
+csl: apa.csl   
+bibliography: references.bib
+toccolor: black
+linkcolor: blue
+urlcolor: blue
+header-includes: \usepackage{mathtools,csquotes,biblatex,longtable,babel,float,tocbibind}
+---
+\thispagestyle{empty}
+\floatplacement{figure}{H}
+\listoffigures
+\listoftables
+\newpage
+\pagenumbering{arabic}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,fig.pos= "H")
+```
+
+
+# Análisis Exploratorio de Datos
+
+## Presupuesto dedicado a cultura
+
+
+### Nacional
+Los presupuestos nacionales aparecen contemplados en las leyes anuales de presupuesto. En la sección correspondiente a la *Exposición de Motivos* se presentan, además de los supuestos bases para la formulación presupuestaria del año, un apéndice con las estadísticas de los recursos (ingresos) y egresos de los cinco años anteriores. En el caso de los egresos, son desglosados por los siguientes conceptos y sus combinaciones:
+
+* institución
+* fuentes de financiamiento
+* partidas
+* conceptos principales de los egresos
+* clasificación económica
+* clasificación sectorial
+
+
+Para determinar el aporte del presupuesto público a la cultura, se debe:
+
+1. Identificar para cada año, las contribuciones del nivel nacional, estadal y municipal, las cuales aparecen contempladas como *Sector 09, Cultura y Comunicación Social*, en los cuadros correspondientes a la clasificación sectorial del gasto para cada uno de estos niveles.
+
+2. Reexpresar en términos reales el valor de los presupuestos nominales que aparecen en las Exposiciones de Motivos.
+
+3. Sumar las contribuciones de cada nivel para obtener el aporte total.
+
+
+La evolución de la magnitud del aporte puede observarse comparando el presupuesto global y de cada nivel, contra el presupueto del Sector 09.
+
+
+### Magnitud relativa del presupuesto dedicado a la cultura
+
+El presupuesto público destinado a la cultura proviene de los aportes del nivel nacional, estadal y municipal. El primer nivel corresponde a los aportes que los órganos del Poder Público Nacional y sus entes adscritos destinan al Sector 09, Cultura y Comunicación y Social. El segundo nivel lo constituyen los aportes de las Gobernaciones y el tercero los de las Alcaldías Municipales. Ahora bien, del primer nivel se transfieren recursos a los Estados y Municipios los cuales, junto a los ingresos propios de estos niveles, conforman el presupuesto de egresos de Estados y Municipios. Parte de estos recursos son destinados también al Sector 09, es decir gastos de Cultura y Comunicación Social de Gobernaciones y Alcaldías.
+
+A partir de los datos de los cuadros 5.1.3, de la Exposición de Motivos del año 2009 \parencite[ver][278]{Exposicion_2009}y los cuadros 5.1.2, 7.1 y 7.6 de la Exposición de Motivos del año 2016 \parencite[ver][219,256,262, 299]{Exposicion_2016}, se construye el cuadro \@ref(tab:PropPpto). Este cuadro muestra que la proporción de ingresos propios y recursos transferidos del Poder Nacional a los Estados y Municipios se ha mantenido relativamente constante a lo largo de los últimos años:
+
+
+
+```{r PropPpto, echo=FALSE, caption=TRUE,fig.cap="PropPpto"}
+library(knitr)
+library(kableExtra)
+Prop_Ppto<-read.csv("PptoEdoMun.csv",sep = ";",header=TRUE,skip=1)
+kable(Prop_Ppto,format="latex",booktabs =TRUE, caption='Proporción de ingresos propios vs totales de estados y municipios, años 2004-2015')%>%kable_styling(latex_options=c("scale_down","HOLD_position"))%>%add_header_above(c(" "=1,"Estados"=3,"Municipios"=3))
+```
+
+
+
+La relativa estabilidad en la conformación de los presupuestos (promedios y medianas de los estados: 2,94% y 2,94%; y para los municipios: 56,17% y 56,47%)  permiten seleccionar un año típico, como 2011, para mostrar con un  *diagrama aluvial o de Sankey*, ver figuras \@ref(fig:Aluvial1) y \@ref(fig:Aluvial2), la magnitud relativa del presupuesto asignado a la cultura, del Poder Público Nacional, Regional y Municipal, incluyendo las transferencias a estas dos últimos niveles. 
+
+
+```{r Aluvial1, echo=FALSE,fig.cap='Diagrama aluvial del presupuesto nacional en 2011', fig.pos="H",fig.align="center",out.width = '75%',warning=FALSE}
+library(png)
+library(ggplot2)
+library(ggalluvial)
+library(ggfittext)
+library(ggrepel)
+Ppto2011v2<-read.csv("Ppto2011v2.csv",header = TRUE,sep = ";")
+par(mfrow=c(2,1))
+ggplot(as.data.frame(Ppto2011v2),out.width = 0.5,
+       aes(y = Monto.Bs.F, axis3 = Ingreso, axis2 = Egreso,axis1 = Sector)) +
+  scale_x_discrete(limits = c("Sector", "Egreso", "Ingreso"), expand = c(.1, .05)) +
+  xlab("Presupuestos") +
+  scale_fill_brewer(type = "qual", palette = "Set2")+
+  geom_alluvium(aes(fill = Ámbito), width = 1/12) +
+  geom_stratum(width = 1/6, fill = "yellow",color = "grey") + 
+  geom_fit_text(stat = "stratum", width = 1/4, min.size = 0.1,label.strata = TRUE) +
+  ggrepel::geom_text_repel(
+    aes(label = ifelse(as.numeric(Ingreso) == 1, as.character(Ingreso), NA)),
+    stat = "stratum", size = 4, direction = "y", nudge_x = 0.3
+  ) +
+  ggrepel::geom_text_repel(
+    aes(label = ifelse(as.numeric(Sector) == 2, as.character(Sector), NA)),
+    stat = "stratum", size = 4, direction = "y", nudge_x = -.3
+  ) +
+  theme(legend.position = "none") +
+  coord_flip()+
+  ggtitle("Ingreso y distribución presupuestaria por sector, año 2011")
+```
+
+
+O también
+
+```{r Aluvial2, echo=FALSE,fig.cap='Distribución de ingresos, egresos y gastos por sector en 2011', fig.pos="H", fig.align="center", out.width = '75%',warning=FALSE}
+library(png)
+include_graphics("sankey.png",auto_pdf = TRUE )
+```
+
+
+
+
+El valor porcentual del presupuesto destinado a la cultura en 2011, es de 1,1\%, La proporción destinada a la cultura, se mantiene igualmente estable alrededor de este valor a lo largo de los años pese a las variaciones del presupuesto público. La evidencia se presenta en el cuadro y la gráfica xx:
+
+
+
+### Reexpresión de los valores nominales del presupuesto público
+
+Convencionalmente la reexpresión a términos reales del presupuesto público en situaciones de inflación se realiza  (ver [Red-DESC](https://www.escr-net.org/es/docs/i/506523)) usando la siguiente fórmula:
+
+
+
+\begin{equation}
+Valor\; real= \frac{Valor\; nominal\times \;índice\; de\; inflación\; actual}{índice\; de\; inflación\; del\; año\; previo\; o\; año\; base}
+\end{equation}
+
+
+Cuando la inflación es moderada la fórmula es útil, sin embargo en situaciones de hiperinflación el índice anual, que es el acumulado a diciembre de cada año, no refleja apropiadamente la corrección, en vista de la gran variabilidad de precios de mes a mes, e incluso de un día al otro y hasta de una hora a la siguiente. La fórmula anterior seguiría siendo útil dado el caso que todo el presupuesto público se ejecutase a fines del mes de diciembre de cada año. La realidad señala en cambio, que la mayor parte del presupuesto se ejecuta mensualmente, a través de la ejecución de los llamados *dozavos*, para el pago fundamentalmente de gasto corriente, integrado por gastos de personal, suministros y servicios, es decir las partidas 4.01, 4.02 y 4.03 del clasificador presupuestario venezolano. 
+
+El siguiente cuadro construido a partir de los cuadros de clasificación económica del gasto de las leyes de presupuesto de 2013 y 2016, permite estimar la proporción que el gasto corriente representa en el caso de Venezuela:
+
+
+```{r echo=FALSE, caption=TRUE}
+library(kableExtra)
+Gastos_C<-read.csv("GC_2008-2016.csv",header = TRUE,sep = ";",row.names = 1)
+kable(Gastos_C,  align=rep('r', 5),format ="latex", booktabs = TRUE, caption="Egresos por clasificación económica 2008-2016 en Bolívares Fuertes")%>%
+kable_styling(latex_options = c("scale_down","HOLD_position"))%>%
+column_spec(1, width = "10em") %>%
+row_spec(c(1,34), bold = TRUE)
+
+```
+
+Obsérvese en la última fila del cuadro anterior, que la proporción en años recientes ronda o supera el 80% del gasto total. Esta tendencia en el caso del presupuesto público venezolano, ya fue identificada anteriormente  [@puente2004economia] para el último tercio del siglo pasado.
+
+Ahora bien como el gasto es mensual, se puede dividir el presupuesto nominal ejecutado de cada año en doce (12) porciones correspondientes al monto ejecutado mensualmente. Luego, cada una estas porciones se reexpresan en términos reales usando la misma fórmula anterior, pero utilizando el Índice de Precios mensual en vez del anual:
+
+\begin{equation}
+Valor\; real\;mes_i= \frac{Valor\; nominal\;mes_i\times \;índice\; de\; inflación\; del\;mes_i}{índice\; de\; inflación\; del\; mes\, base}
+\end{equation}
+
+
+O también
+
+\begin{equation}
+Valor\; real\;mes_i= Valor\; nominal\;mes_i\times \;f_i\quad donde \quad i=mes=1,2,\dots,12
+\end{equation}
+
+con 
+\begin{equation}
+f_i=\frac{índice\; de\; inflación\; del\;mes_i}{índice\; de\; inflación\; del\; mes\, base}
+\end{equation}
+
+
+El presupuesto total del año reexpresado será simplemente la suma de cada una de estas porciones debidamentes reexpresadas. La siguiente figura muestra esquemáticamente la operación: 
+
+\setlength{\unitlength}{0.20mm}
+\begin{picture}(400,250)
+\put(180,20){\line(0,1){200}}
+\put(305,20){\line(0,1){200}}
+\put(430,20){\line(0,1){200}}
+\put(555,20){\line(0,1){200}}
+\put(305,50){\thicklines{\vector(-1,0){125}}}
+\put(430,100){\thicklines{\vector(-1,0){250}}}
+\put(555,150){\thicklines{\vector(-1,0){375}}}
+\put(355,120){$f_1$}
+\put(240,70){$f_2$}
+\put(490,170){$f_3$}
+\put(180,0){Mes base}
+\put(305,0){Mes 1}
+\put(430,0){Mes 2}
+\put(555,0){Mes 3}
+\end{picture}
+
+
+Para obtener el presupuesto del año se aplicaría la siguiente fórmula:
+
+\begin{equation}
+Presupuesto\;real\;del\;año_j=\sum_{i=1}^{12} \frac{Presupuesto\; nominal\;del\;año_j}{12}\times \;f_i \quad con\quad j: años
+\end{equation}
+
+El Banco Central de Venezuela  publica los actuales índices de precios al consumidor tomando el año 2008 como año base, más precisamente se fija como base 100 el índice de precios para diciembre de 2007. En esta investigación se tomará igualmente este año como base así como con todos los demás indices que se utilizan.
+
+
+
+### Estados y Distritos
+
+Los datos proporcionados por la ONAPRE contienen la distribución del Presupuesto de Gastos del Sector 09 "Cultura y Comunicación" en bolívares fuertes de las Entidades Federales, es decir Estados y Distritos Metropolitanos.
+
+Se cargan los datos de la ONAPRE, se renombran las columnas (variables), se eliminan los Distritos Metropolitanos de Caracas y Alto Apure [^nota1] (esos datos se agregarán a los municipios que los conformaban hasta 2017), y se realiza un resumen:
+
+[^nota1]: El primero agrupaba los municipios Baruta, Chacao, Sucre y El Hatillo del Estado Miranda y el Municipio Libertador del Distrito Capital y el del Alto Apure a los municipios José Antonio Páez y Rómulo Gallegos del estado Apure.
+
+```{r echo=FALSE}
+Cultura_estados00<-read.csv("Cultura Estados.csv",header = TRUE,sep = ";",row.names = 1)
+Cultura_estados<-Cultura_estados00[-c(25,26),]
+colnames(Cultura_estados)<-c("2008","2009","2010",
+"2011","2012","2013","2014","2015","2016","2017",
+"2018")
+```
+
+
+
+```{r echo=FALSE}
+kable(summary((Cultura_estados)[,1:4]),format = "latex",booktabs=TRUE, caption = "Resumen Años 2008-2011")%>%
+kable_styling(latex_options = c("HOLD_position"))
+kable(summary((Cultura_estados)[,5:8]),format = "latex",booktabs=TRUE, caption = "Resumen Años 2012-2015")%>%
+kable_styling(latex_options = c("HOLD_position"))
+kable(summary((Cultura_estados)[,9:11]),format = "latex",booktabs=TRUE, caption = "Resumen Años 2016-2018")%>%
+kable_styling(latex_options = c("HOLD_position"))
+```
+
+
+* Se observa la existencia de datos faltantes, en especial en 2010 y 2018, con 10 y 6 datos ausentes de un total de 24.
+
+
+* Las medianas son siempre inferiores a las medias, por lo que hay un efecto de cola larga. El efecto es variable a lo largo de los años, y para observarlo con mayor detalle se realizan los gráficos con ayuda de un boxplot de los datos para el período 2008-2018.
+
+ 
+
+#### Grafico de los datos
+
+Se realiza un gráfico boxplot con el presupuesto en valores nominales del año respectivo expresados en bolívares fuertes:
+
+
+```{r echo=FALSE,fig.cap="Presupuesto Cultural Estadal en términos nominales, período 2008-2018", fig.pos="H"}
+boxplot(Cultura_estados,xlab="Años",ylab="Presupuesto Bs.F",main="Presupuesto Cultural Estadal 2008-2018",cex.lab=0.8,cex.axis=0.6,cex.main=0.9)
+```
+
+
+
+Se observa un aparente crecimiento luego de 2016, sin embargo esto puede originarse en la devaluación de la moneda. Por tal motivo se estandarizan (escalan) los datos con respecto al promedio de cada año y se compara con el valor medio, el cual se identifica con una línea recta horizontal a trazos de color rojo:
+
+
+
+```{r fig.cap="Presupuesto Cultural Estadal 2008-2018 escalado", fig.pos="H"}
+Cultura_estados_esc<-scale(Cultura_estados)
+boxplot(Cultura_estados_esc,xlab="Años",
+ylab="Presupuesto escalado",
+main="Presupuesto Cultural Estadal 2008-2018 escalado",
+cex.lab=0.8,cex.axis=0.6,cex.main=0.9)
+abline(h=0,col="red",lty=2)
+```
+
+
+Se aprecia mejor que las medianas son inferiores a las medias, además se percibe la presencia de valores atípicos superiores, excepto en 2010, 2012 y 2016. Los valores atípicos pueden ser hallados ubicando los máximos para cada año con los datos originales:
+
+
+```{r echo=FALSE}
+i<-apply(Cultura_estados, MARGIN =2,FUN = which.max)
+Estados<-as.vector(rownames(Cultura_estados)[i])
+Año<-(colnames(Cultura_estados))
+A_E<-cbind(Año,Estados)
+knitr::kable(A_E, format = "latex",booktabs=TRUE,caption = "Estados con mayores presupuestos 2008-2018")%>%
+kable_styling(latex_options = c("HOLD_position"))
+```
++ El resultado notable para Distrito Capital y Miranda de 2013 a 2017 y en 2018 el primero, y 2008, 2009 y 2011 el segundo, es esperable en vista de la concentración cultural en la zona metropolitana de Caracas. 
+
++ Es oportuno señalar que los datos originales de la ONAPRE para los estados carecen de los datos del Distrito Capital porque este presupuesto es nacional. Los datos se recogen en el *Título IV* de las leyes anuales de presupuesto, por tanto fue necesario completar la información del Gobierno del Distrito Capital sumando los recursos destinados a la cultura a través de la Secretaría de Identidad Caraqueña y dos entes descentralizados con objetivos culturales: la Fundación Identidad Caraqueña y la Banda Marcial de Caracas.
+
+
+
+
+#### Distribución de los datos
+
+Para analizar la distribución de los datos se toman como muestras tres casos característicos: aquellos sin valores atípicos y los tres casos con los mayores valores atípicos.
+
+La primera muestra corresponde a los años 2009, 2010 y 2012 en los cual no hubo valores atípicos. Se trazan los histogramas respectivos para ver la distribución:
+
+```{r fig.cap="Presupuesto cultural de los estados para años sin valores atípicos",fig.pos="H"}
+par(mfrow=c(2,2))
+y2009<-hist(Cultura_estados$`2009`,xlab="Bs.",
+ylab="Frecuencia",
+main="Año 2009", cex.lab=0.7,
+cex.axis=0.7,cex.main=0.7)
+y2010<-hist(Cultura_estados$`2010`,xlab="Bs.",
+ylab="Frecuencia",
+main="Año 2010", cex.lab=0.7,
+cex.axis=0.5,cex.main=0.7)
+y2012<-hist(Cultura_estados$`2012`,xlab="Bs.",
+ylab="Frecuencia",
+main="Año 2012", cex.lab=0.7,
+cex.axis=0.5,cex.main=0.7)
+
+```
+
+
+
+Se observa una distribución relativamente uniforme entre los estados para estos años. 
+
+Luego, se hace lo mismo pero para los años con los mayores valores atípicos 2008, 2014 y 2015:
+
+```{r fig.cap="Presupuesto cultural de los estados para años con los mayores valores atípicos", fig.pos="H"}
+par(mfrow=c(2,2))
+y2008<-hist(Cultura_estados$`2008`,xlab="Bs.",
+ylab="Frecuencia",
+main="Año 2008",
+cex.lab=0.7,
+cex.axis=0.7,cex.main=0.7)
+y2014<-hist(Cultura_estados$`2014`,xlab="Bs.",
+ylab="Frecuencia",
+main="Añol 2014",
+cex.lab=0.7,
+cex.axis=0.7,cex.main=0.7)
+y2015<-hist(Cultura_estados$`2015`,xlab="Bs.",
+ylab="Frecuencia",
+main="Año 2015", 
+cex.lab=0.7,
+cex.axis=0.7,cex.main=0.7)
+```
+
+
+El efecto de cola larga es notable en los años con los mayores valores atípicos. Sin embargo la desigualdad no supera un primer orden de magnitud. Lo limitado de la desigualdad entre el presupuesto para la cultura estadal se debe a que las distribuciones presupuestarias tienen un predominio de las fuentes nacionales, vía situado constitucional o financiamientos especiales. Solo un pequeño porcentaje de los recursos estadales es derivado de los ingresos propios de los estados. 
+
+
+Las distribuciones de origen nacional se reparten proporcionalmente entre las 24 entidades más una proporción en función de la población. Adicionalmente, la proporción sectorial destinada a la cultura se mantiene siempre cercano al 1% del presupuesto total asignado a los estados. De allí que la desigualdad en la asignación cultural estadal, aunque existe, se limita una dispersión de solo un orden de magnitud entre los datos menores y mayores.  
+
+
+#### Reexpresión del presupuesto a valores reales
+
+
+Otra forma de ver los datos y el cambio en el poder de compra en el período, es reexpresar los datos a valores reales, es decir constantes. Dada la limitación en la información sobre los índices inflacionarios del Banco Central de Venezuela, es posible lograr un resultado similar reexpresando los valores nominales de los bolívares fuertes de cada año en dólares. Para ello y dada la fuerte devaluación de la moneda y el inicio de un proceso hiperinflacionario en 2018, se asumirá una posición conservadora ante la variedad de tasas de cambio existentes en el período analizado. Lo importante, más que los términos absolutos, es la variación. Los criterios son los siguientes: 
+
+1. Se utiliza una única tasa para estandarizar los datos. 
+
+
+2. Se usa la tasa no regulada por dar una idea más realista del nivel de inflación en el período en consideración.
+
+
+3. Se elige la tasa para el momento de la elaboración de los presupuestos, es decir el mes de diciembre del año anterior a la entrada en vigencia de la ley de presupuesto. Así si se trata del presupuesto de 2008, se elige la tasa para diciembre de 2007 y se continúa de la misma manera para los años siguientes hasta el 2018.
+
+En base a los criterios anteriores se construye la matriz con los datos de las tasas de cambio  (ver [Cotización histórica del bolívar con respecto al dólar](https://es.wikipedia.org/wiki/Anexo:Cotizaci%C3%B3n_hist%C3%B3rica_del_bol%C3%ADvar_con_respecto_al_d%C3%B3lar "Cotización del dólar")), y se multiplica el presupuesto de cada año y estado por la tasa de cambio correspondiente:
+
+```{r}
+tasa<-rep(c(1/5.7,	1/5.7,	1/5.97,	
+1/9.14,	1/9.45,	1/17.32,	
+1/64.10,	1/173.0,	1/910.6,
+1/3200,	1/179400),24)
+Tasa<-matrix(tasa,ncol=11,byrow = TRUE)
+colnames(Tasa)<-c("Tasa2008","Tasa2009","Tasa2010",
+"Tasa2011","Tasa2012","Tasa2013","Tasa2014","Tasa2015",
+"Tasa2016","Tasa2017","Tasa2018") #Nombres a las columnas de Tasa.
+reex<-Cultura_estados*Tasa #Presupesto reexpresado en dólares USD.
+```
+
+
+Con los datos obtenidos anteriormente se construye el gráfico boxplot:
+
+```{r fig.cap="Presupuesto Cultural Estadal 2008-2018 a valores reales",fig.pos="H"}
+boxplot(reex,xlab="Años",ylab="Presupuesto USD",
+main="Período 2008-2018 a valores reales",
+cex.lab=0.8,cex.axis=0.6,cex.main=0.9,ylim=c(0,5500000))
+```
+
+Dada la asimetría en la distribución de los datos y la presencia de valores atípicos que afectan a la media, para comparar se elige la mediana. Se observa que la mediana se reduce aceleradamente a partir de 2013 hasta 2018. Si se comparan las medianas de cada año, tomando como base 100 al año 2008, se obtiene una representación más nítida. Para ello primero se halla la mediana de 2008 y se expresa como la base 100 y luego se divide cada valor por el valor de dicha mediana y se grafica el boxplot:
+
+```{r}
+m<-median(reex$`2008`,na.rm=TRUE)
+m
+```
+
+
+```{r fig.cap="Presupuesto Cultural Estadal 2008-2018 en base a mediana de 2008",fig.pos="H"}
+reex2<-100*reex/m
+boxplot(reex2,xlab="Años",
+ylab="%Presupuesto",
+main="Presupuesto Cultural Estadal 2008-2018",
+cex.lab=0.8,cex.axis=0.6,cex.main=0.8, ylim=c(0,250))
+```
+
+Se observa una caída sostenida , y mas abrupta a partir de 2013, de una base de 100 a solo 0,5 entre 2008 y 2018 en el aporte estadal a la cultura. Una reeducción de 200 veces en el período.
+
+
+# Bibliografía

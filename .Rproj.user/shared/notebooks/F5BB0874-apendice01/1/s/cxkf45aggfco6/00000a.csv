@@ -1,0 +1,5 @@
+"0","text_offset <- 0.05"
+"0",""
+"0","df$month_count <- ave(df$date==df$date, df$date, FUN=cumsum)"
+"0","df$text_position <- (df$month_count * text_offset * df$direction) + df$position"
+"0","head(df)"

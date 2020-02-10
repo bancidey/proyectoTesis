@@ -1,0 +1,25 @@
+library(rtweet)
+
+
+### Extraer twett por localización y palabra
+
+Ext <- function(loc,num){
+  
+  
+  rt <- search_tweets(
+    "lang:en", geocode = lookup_coords(loc), n = num
+  )
+  
+  
+}
+l <- Ext("usa",10)
+
+
+### Extraer twett por cuenta
+
+Ext_cuenta <- function(num,User_name,...){
+  
+  get_timelines(c(User_name,...), n = num)
+  
+}
+d<-Ext_cuenta(20,"cnn","cnbc","business")
